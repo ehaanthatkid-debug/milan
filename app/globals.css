@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #fbf6ee;
+  --color-ivory-100: #f7efe2;
+  --color-ivory-200: #f1e5d3;
+  --color-sand: #e7d9c4;
+  --color-sand-deep: #d8c5a8;
+
+  --color-ink: #2b1810;
+  --color-ink-soft: #5b463b;
+  --color-ink-mute: #8a7365;
+
+  --color-maroon: #7a1230;
+  --color-maroon-deep: #5c0d24;
+  --color-maroon-ink: #360914;
+  --color-maroon-soft: #f5e3e5;
+
+  --color-gold: #c89b3c;
+  --color-gold-deep: #9c7424;
+  --color-saffron: #e8b15b;
+  --color-saffron-soft: #fbecd2;
+
+  --color-leaf: #2f6b4f;
+  --color-leaf-soft: #e3efe7;
+  --color-danger: #b42318;
+
+  --shadow-card: 0 1px 2px rgb(43 24 16 / 0.05), 0 14px 32px -18px rgb(43 24 16 / 0.28);
+  --shadow-lift: 0 2px 6px rgb(43 24 16 / 0.06), 0 28px 56px -24px rgb(43 24 16 / 0.38);
+  --shadow-float: 0 18px 50px -12px rgb(54 9 20 / 0.45);
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "kern";
+}
+
+/* A barely-there paper grain behind the content, so the ivory reads like stock rather than a flat fill. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-saffron-soft);
+  color: var(--color-maroon-ink);
+}
+
+.font-display {
+  font-variation-settings: "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.015em;
+}
+
+.font-display em,
+.display-italic {
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-ivory-200);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+/* Leaflet sits inside rounded cards; keep its controls on-brand. */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--color-ivory-200);
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgb(251 246 238 / 0.85) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+/* Map pins: a maroon pill with a small tail, saffron when highlighted. */
+.leaflet-container {
+  z-index: 0;
+}
+
+.utsav-pin {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 6px));
+  transition: transform 0.25s var(--ease-soft);
+}
+
+.utsav-pin span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 2px solid var(--color-ivory);
+  background: var(--color-maroon);
+  color: var(--color-ivory);
+  font: 600 12px/1 var(--font-sans);
+  box-shadow: 0 8px 18px -6px rgb(54 9 20 / 0.55);
+  transition: background 0.2s, color 0.2s;
+}
+
+.utsav-pin span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.utsav-pin.is-active {
+  transform: translate(-50%, calc(-100% - 6px)) scale(1.15);
+}
+
+.utsav-pin.is-active span {
+  background: var(--color-saffron);
+  color: var(--color-maroon-ink);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  background: var(--color-ivory);
+  box-shadow: 0 18px 40px -12px rgb(54 9 20 / 0.4);
+}
+
+.leaflet-popup-content {
+  margin: 14px 16px;
+}
+
+.leaflet-popup-tip {
+  background: var(--color-ivory);
+}
+
+/* Warm the OpenStreetMap tiles so they sit comfortably in the ivory palette. */
+.leaflet-tile-pane {
+  filter: saturate(0.55) sepia(0.18) brightness(1.02);
+}
