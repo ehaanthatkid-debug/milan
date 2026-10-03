@@ -19,7 +19,7 @@ export function ClosetBand() {
           className="pointer-events-none absolute -right-24 -bottom-24 size-96 rounded-full bg-saffron/25 blur-3xl"
           aria-hidden="true"
         />
-        <div className="grid items-center gap-12 p-6 sm:p-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:p-16">
+        <div className="grid grid-cols-1 items-center gap-12 p-6 sm:p-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:p-16">
           <Reveal className="relative order-2 lg:order-1">
             <div className="relative mx-auto aspect-[5/5.4] max-w-[520px]">
               <div className="absolute top-0 left-0 h-[82%] w-[62%] overflow-hidden rounded-[1.75rem] shadow-lift">
@@ -63,7 +63,7 @@ export function ClosetBand() {
               Borrow designer lehengas, sherwanis, and sarees from local boutiques and neighbors — or sell the ones
               you&rsquo;ve worn once to someone who&rsquo;ll love them next.
             </p>
-            <ul className="mt-8 grid gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
               {perks.map(({ icon: Icon, title, text }) => (
                 <li key={title} className="flex gap-3 xl:flex-col">
                   <span className="grid size-10 shrink-0 place-items-center rounded-full bg-maroon-soft text-maroon">

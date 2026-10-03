@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, CalendarPlus, Mail, Printer, Ticket } from "lucide-react";
+import { ArrowRight, CalendarPlus, Mail, Printer, Ticket, Users } from "lucide-react";
 import type { Order } from "@/lib/checkout";
 import { downloadCalendarFile } from "@/lib/calendar";
 import type { StoredOrder } from "@/lib/orders";
@@ -64,7 +64,7 @@ export function SuccessView({ order, stored }: { order: Order; stored: StoredOrd
           <h2 className="font-display flex items-center gap-2 text-2xl text-ink">
             <Ticket className="size-5 text-maroon" /> Your {tickets.codes.length === 1 ? "ticket" : `${tickets.codes.length} tickets`}
           </h2>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {tickets.codes.map((code, i) => (
               <TicketStub
                 key={code}
@@ -118,9 +118,14 @@ export function SuccessView({ order, stored }: { order: Order; stored: StoredOrd
         transition={{ delay: 1.2, duration: 0.6 }}
         className="mt-10 flex flex-col flex-wrap gap-3 sm:flex-row print:hidden"
       >
-        <ButtonLink href="/bookings" size="lg" className="h-12">
-          <Ticket className="size-4" /> View in My bookings
+        <ButtonLink href="/profile" size="lg" className="h-12">
+          <Ticket className="size-4" /> {order.kind === "event" ? "View tickets in your profile" : "Track in your profile"}
         </ButtonLink>
+        {order.kind === "event" && (
+          <ButtonLink href={`/events/${order.slug}#whos-going`} variant="outline" size="lg" className="h-12">
+            <Users className="size-4" /> See who&apos;s going
+          </ButtonLink>
+        )}
         {stored.calendar && (
           <button
             type="button"

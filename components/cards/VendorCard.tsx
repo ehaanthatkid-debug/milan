@@ -36,7 +36,7 @@ export function VendorCard({
         <span className="absolute top-3 left-3 rounded-full bg-ivory/95 px-3 py-1 text-xs font-semibold text-maroon shadow-sm">
           {vendor.category}
         </span>
-        <SaveButton label={vendor.name} className="absolute top-3 right-3" />
+        <SaveButton label={vendor.name} item={{ kind: "vendor", id: vendor.slug }} className="absolute top-3 right-3" />
         <span className="absolute bottom-3 left-3 rounded-full bg-maroon-ink/45 px-3 py-1 text-xs font-medium text-ivory backdrop-blur-md">
           {vendor.priceRange} · From {formatPrice(vendor.startingPrice)}/{vendor.priceUnit}
         </span>

@@ -86,7 +86,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
         </div>
         <div className="flex items-center gap-2">
           <ShareButton title={vendor.name} />
-          <SaveButton label={vendor.name} className="size-10 border border-sand bg-white/60" />
+          <SaveButton label={vendor.name} item={{ kind: "vendor", id: vendor.slug }} className="size-10 border border-sand bg-white/60" />
         </div>
       </header>
 
@@ -94,7 +94,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
         <PhotoMosaic images={[vendor.image, ...vendor.gallery]} alt={vendor.name} />
       </div>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
         <div className="min-w-0">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {facts.map(({ icon: FactIcon, label, value }) => (
@@ -120,7 +120,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
           <Reveal>
             <section className="mt-12">
               <h2 className="font-display text-3xl text-ink">Services &amp; pricing</h2>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {vendor.services.map((s) => (
                   <div key={s.name} className="flex flex-col rounded-2xl border border-sand/80 bg-white/60 p-5">
                     <div className="flex items-start justify-between gap-3">
@@ -138,7 +138,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
           <Reveal>
             <section id="reviews" className="mt-12 scroll-mt-28">
               <h2 className="font-display text-3xl text-ink">Reviews</h2>
-              <div className="mt-5 grid gap-6 rounded-[1.75rem] bg-ivory-100 p-6 ring-1 ring-sand/70 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10">
+              <div className="mt-5 grid grid-cols-1 gap-6 rounded-[1.75rem] bg-ivory-100 p-6 ring-1 ring-sand/70 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10">
                 <div className="text-center sm:text-left">
                   <p className="font-display text-6xl text-ink">{vendor.rating.toFixed(1)}</p>
                   <Stars value={vendor.rating} size={16} className="mt-1" />
@@ -156,7 +156,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
                   ))}
                 </div>
               </div>
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
                 {vendor.reviews.map((r) => (
                   <figure key={r.name + r.date} className="rounded-2xl border border-sand/80 bg-white/60 p-5">
                     <div className="flex items-center justify-between gap-3">

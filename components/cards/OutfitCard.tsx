@@ -32,7 +32,7 @@ export function OutfitCard({ outfit, className }: { outfit: Outfit; className?: 
             </span>
           )}
         </div>
-        <SaveButton label={outfit.name} className="absolute top-2.5 right-2.5 size-9 sm:top-3 sm:right-3 sm:size-10" />
+        <SaveButton label={outfit.name} item={{ kind: "outfit", id: outfit.slug }} className="absolute top-2.5 right-2.5 size-9 sm:top-3 sm:right-3 sm:size-10" />
         <span className="absolute bottom-2.5 left-2.5 rounded-full bg-saffron px-2.5 py-1 text-[0.7rem] font-semibold text-maroon-ink sm:bottom-3 sm:left-3">
           {savings}% off retail
         </span>

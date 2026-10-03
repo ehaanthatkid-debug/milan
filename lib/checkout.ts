@@ -105,7 +105,7 @@ export function buildOrder(sp: URLSearchParams): Order | null {
       successTitle: free ? "You're on the list!" : "You're going!",
       successMessage: `${qty} ${qty === 1 ? "spot" : "spots"} for ${event.title} on ${formatShortDate(event.date)}.`,
       nextSteps: [
-        { title: "Your tickets are ready", text: "Show these QR codes at the door — they're also saved in My bookings on this device." },
+        { title: "Your tickets are ready", text: "Show these QR codes at the door — they're also saved in your profile on this device." },
         { title: "Reminder the day before", text: `We'll email you the day before with parking tips. Doors open around ${formatTime(event.startTime)}.` },
         { title: "Plans changed?", text: "Transfer tickets to a friend anytime, or get a full refund up to 7 days before." },
       ],

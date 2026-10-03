@@ -27,7 +27,7 @@ export function NewsletterBand() {
           className="object-cover opacity-30 mix-blend-screen"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-maroon via-maroon/90 to-maroon/40" />
-        <div className="relative grid gap-8 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:px-16 lg:py-20">
+        <div className="relative grid grid-cols-1 gap-8 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:px-16 lg:py-20">
           <div>
             <Eyebrow tone="light">The Thursday Letter</Eyebrow>
             <h2 className="font-display mt-3 text-[2.1rem] leading-[1.05] sm:text-5xl">

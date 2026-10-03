@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Users } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { fromPrice, isFree, type EventItem } from "@/data/events";
 import { SaveButton } from "@/components/ui/SaveButton";
-import { cn, dayOfMonth, formatCount, formatPrice, formatShortDate, formatTime, monthShort, weekdayShort } from "@/lib/utils";
+import { GoingPill, GoingSummary } from "@/components/social/Rsvp";
+import { cn, dayOfMonth, formatPrice, formatShortDate, formatTime, monthShort, weekdayShort } from "@/lib/utils";
 
 export function DateBadge({ date, className }: { date: string; className?: string }) {
   return (
@@ -68,7 +69,7 @@ export function EventCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-maroon-ink/55 via-transparent to-transparent" />
         <DateBadge date={event.date} className="absolute top-3 left-3" />
-        <SaveButton label={event.title} className="absolute top-3 right-3" />
+        <SaveButton label={event.title} item={{ kind: "event", id: event.slug }} className="absolute top-3 right-3" />
         <span className="absolute bottom-3 left-3 rounded-full bg-maroon-ink/45 px-3 py-1 text-xs font-medium tracking-wide text-ivory backdrop-blur-md">
           {event.category}
         </span>
@@ -87,12 +88,12 @@ export function EventCard({
             {event.venue.name.split(" — ")[0]} · {event.city}
           </span>
         </p>
-        <div className="mt-3 flex items-center justify-between border-t border-sand/80 pt-3 text-sm">
-          <PriceLabel event={event} />
-          <span className="flex items-center gap-1.5 text-ink-mute">
-            <Users className="size-3.5" />
-            {formatCount(event.attending)} going
-          </span>
+        <div className="mt-3 flex items-end justify-between gap-3 border-t border-sand/80 pt-3 text-sm">
+          <div className="min-w-0">
+            <PriceLabel event={event} />
+            <GoingSummary event={event} className="mt-1.5" />
+          </div>
+          <GoingPill event={event} />
         </div>
       </div>
     </Link>

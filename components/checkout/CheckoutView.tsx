@@ -9,6 +9,7 @@ import { BRAND } from "@/lib/brand";
 import { DECLINE_MESSAGES, newOrderNumber, simulateCharge, type ChargeOutcome } from "@/lib/payments";
 import { findPromo, type Promo } from "@/lib/promo";
 import { blockedDates, saveOrder, saveProfile, useOrders, useSavedProfile, type PaymentInfo, type StoredOrder } from "@/lib/orders";
+import { setRsvp } from "@/lib/social";
 import { useToday } from "@/lib/use-today";
 import { cn, formatMoney } from "@/lib/utils";
 import { ButtonLink } from "@/components/ui/Button";
@@ -178,6 +179,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
       schedule: pricing.schedule,
       date: o.date,
       blockDates: o.blockDates,
+      fulfillment: o.kind === "rent" || o.kind === "buy" ? (o.needsAddress ? "delivery" : "pickup") : undefined,
       tickets: o.tickets
         ? {
             tierIndex: o.tickets.tierIndex,
@@ -193,6 +195,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
         : undefined,
     };
     saveOrder(record);
+    if (o.kind === "event") setRsvp(o.slug, "going");
     if (saveInfo) {
       saveProfile({
         email: fields.email,
@@ -298,7 +301,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
         </span>
       </div>
 
-      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14">
+      <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14">
         <div className="lg:order-2">
           <button
             type="button"
@@ -410,7 +413,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
                   onBlur={() => touch("email")}
                 />
               </Field>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="Full name" error={errors.name} htmlFor="name">
                   <TextInput
                     id="name"
@@ -459,7 +462,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
                     onChange={(e) => set("address2", e.target.value)}
                   />
                 </Field>
-                <div className="grid gap-4 sm:grid-cols-[1fr_10rem]">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_10rem]">
                   <Field label="City" error={errors.addrCity} htmlFor="addrCity">
                     <TextInput
                       id="addrCity"
@@ -504,7 +507,7 @@ export function CheckoutView({ serverToday }: { serverToday: string }) {
                     onBlur={() => touch("venue")}
                   />
                 </Field>
-                <div className="grid gap-4 sm:grid-cols-[12rem_1fr]">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-[12rem_1fr]">
                   <Field label="Start time (optional)" htmlFor="startTime">
                     <TextInput id="startTime" type="time" value={fields.startTime} onChange={(e) => set("startTime", e.target.value)} />
                   </Field>

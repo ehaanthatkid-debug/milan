@@ -28,7 +28,7 @@ export function Receipt({ order }: { order: StoredOrder }) {
           </p>
         </div>
       </div>
-      <dl className="grid gap-4 border-b border-sand/80 p-5 text-sm sm:grid-cols-3 sm:p-6">
+      <dl className="grid grid-cols-1 gap-4 border-b border-sand/80 p-5 text-sm sm:grid-cols-3 sm:p-6">
         {order.facts.map((f) => (
           <div key={f.label}>
             <dt className="text-xs font-semibold tracking-wider text-ink-mute uppercase">{f.label}</dt>

@@ -39,7 +39,7 @@ export function CommunityVoices() {
           }
         />
       </Reveal>
-      <div className="mt-10 grid gap-4 md:grid-cols-3 lg:gap-6">
+      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6">
         {voices.map((v, i) => (
           <Reveal key={v.name} delay={i * 0.08}>
             <figure className="flex h-full flex-col rounded-3xl border border-sand/80 bg-white/60 p-7 shadow-card lg:p-8">

@@ -2,11 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { isSaved, toggleSaved, useSocial, type SavedKind } from "@/lib/social";
 import { cn } from "@/lib/utils";
 
-export function SaveButton({ label, className }: { label: string; className?: string }) {
-  const [saved, setSaved] = useState(false);
+/** Heart button that saves an event, outfit, or vendor to your profile. Safe to place inside a link. */
+export function SaveButton({ label, item, className }: { label: string; item: { kind: SavedKind; id: string }; className?: string }) {
+  const s = useSocial();
+  const saved = isSaved(s, item.kind, item.id);
 
   return (
     <button
@@ -16,7 +18,7 @@ export function SaveButton({ label, className }: { label: string; className?: st
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        setSaved((s) => !s);
+        toggleSaved(item.kind, item.id);
       }}
       className={cn(
         "relative grid size-10 place-items-center rounded-full bg-ivory/90 text-ink shadow-sm backdrop-blur transition-colors hover:bg-white active:scale-90",

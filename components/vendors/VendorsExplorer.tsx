@@ -172,7 +172,7 @@ export function VendorsExplorer({ initialCategory }: { initialCategory?: string 
             action={<Button onClick={clearAll}>Clear all filters</Button>}
           />
         ) : (
-          <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-x-6">
+          <div className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-x-6">
             {loading
               ? Array.from({ length: 8 }, (_, i) => <CardSkeleton key={i} />)
               : results.map((v, i) => (

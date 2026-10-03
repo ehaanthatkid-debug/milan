@@ -84,7 +84,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="mx-auto max-w-[1400px] px-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <div>
             <Eyebrow>About {BRAND.name}</Eyebrow>
             <h1 className="font-display mt-4 text-[2.7rem] leading-[1.02] text-balance text-ink sm:text-6xl lg:text-[4.2rem]">
@@ -128,7 +128,7 @@ export default function AboutPage() {
         <Reveal>
           <SectionHeading eyebrow="What we do" title={<>Events, vendors, and <em>festive wear</em></>} />
         </Reveal>
-        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6">
           {offerings.map(({ icon: Icon, title, text, href }, i) => (
             <Reveal key={title} delay={i * 0.07}>
               <Link
@@ -150,7 +150,7 @@ export default function AboutPage() {
       </section>
 
       <section className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
             <Eyebrow>Why it exists</Eyebrow>
             <h2 className="font-display mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
@@ -217,7 +217,7 @@ export default function AboutPage() {
               title={<>Five cities, <em>one community</em></>}
               description="The Puget Sound region is home to one of the largest South Asian communities on the West Coast. We started on the Eastside and cover the whole area."
             />
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {cities.map((c, i) => (
                 <Reveal key={c.name} delay={i * 0.06}>
                   <div className="h-full rounded-2xl bg-ivory/[0.07] p-5 ring-1 ring-ivory/15 backdrop-blur-sm">
@@ -244,7 +244,7 @@ export default function AboutPage() {
       </section>
 
       <section id="partners" className="mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
-        <div className="grid gap-10 rounded-[2rem] bg-ivory-100 p-6 ring-1 ring-sand/70 sm:p-10 lg:grid-cols-[1fr_1.6fr] lg:gap-14 lg:rounded-[2.5rem] lg:p-16">
+        <div className="grid grid-cols-1 gap-10 rounded-[2rem] bg-ivory-100 p-6 ring-1 ring-sand/70 sm:p-10 lg:grid-cols-[1fr_1.6fr] lg:gap-14 lg:rounded-[2.5rem] lg:p-16">
           <Reveal>
             <Eyebrow>List with {BRAND.name}</Eyebrow>
             <h2 className="font-display mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
@@ -256,7 +256,7 @@ export default function AboutPage() {
               nonprofits pay no fees.
             </p>
           </Reveal>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {partnerTypes.map(({ icon: Icon, title, text, subject }, i) => (
               <Reveal key={title} delay={i * 0.08}>
                 <a

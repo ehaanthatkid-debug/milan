@@ -46,11 +46,11 @@ export default async function OutfitPage({ params }: PageProps<"/closet/[slug]">
         <BackLink href="/closet">Festive Closet</BackLink>
         <div className="flex items-center gap-2">
           <ShareButton title={outfit.name} />
-          <SaveButton label={outfit.name} className="size-10 border border-sand bg-white/60" />
+          <SaveButton label={outfit.name} item={{ kind: "outfit", id: outfit.slug }} className="size-10 border border-sand bg-white/60" />
         </div>
       </div>
 
-      <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
+      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Gallery images={outfit.images} alt={outfit.name} />
         </div>
@@ -103,7 +103,7 @@ export default async function OutfitPage({ params }: PageProps<"/closet/[slug]">
                   </div>
                 ))}
               </dl>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl bg-ivory-100 p-5 ring-1 ring-sand/70">
                   <p className="font-semibold text-ink">What&apos;s included</p>
                   <ul className="mt-2 space-y-1.5 text-sm text-ink-soft">

@@ -1,13 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, CircleDollarSign, LayoutGrid, List, Map as MapIcon, MapPin, Search, Users, X } from "lucide-react";
+import { CalendarDays, CalendarRange, CircleDollarSign, LayoutGrid, List, Map as MapIcon, MapPin, Search, Users, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AGE_GROUPS, AGE_GROUP_LABELS, EVENT_CATEGORIES, events, fromPrice, isFree, type AgeGroup, type EventItem } from "@/data/events";
 import { CITIES } from "@/data/shared";
 import { EventCard } from "@/components/cards/EventCard";
 import { EventRow } from "./EventRow";
 import { MapView, type MapPin as Pin } from "@/components/map/Map";
+import { EventsCalendar } from "@/components/calendar/EventsCalendar";
+import { useSocial } from "@/lib/social";
 import { Button } from "@/components/ui/Button";
 import { FilterChip, SegmentedControl, SelectPill } from "@/components/ui/Filters";
 import { CardSkeleton, EmptyState, ListRowSkeleton } from "@/components/ui/States";
@@ -15,7 +17,7 @@ import { useSimulatedLoading } from "@/lib/use-simulated-loading";
 import { useToday } from "@/lib/use-today";
 import { daysBetween, monthShort, dayOfMonth, parseLocalDate } from "@/lib/utils";
 
-type View = "grid" | "list" | "map";
+type View = "grid" | "list" | "map" | "calendar";
 type DateFilter = "any" | "week" | "weekend" | "month" | "later";
 type PriceFilter = "any" | "free" | "under25" | "25to75" | "over75";
 type AgeFilter = "any" | AgeGroup;
@@ -104,6 +106,7 @@ export function EventsExplorer({
   );
   const [view, setView] = useState<View>("grid");
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const social = useSocial();
 
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -255,8 +258,14 @@ export function EventsExplorer({
             description="Try a different date or city — or clear your filters to see everything happening this season."
             action={<Button onClick={clearAll}>Clear all filters</Button>}
           />
+        ) : view === "calendar" ? (
+          loading ? (
+            <div className="skeleton h-[32rem] rounded-[1.75rem]" />
+          ) : (
+            <EventsCalendar key={filterKey} events={results} today={today} marks={social.rsvps} />
+          )
         ) : view === "map" ? (
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
             <div className="order-2 space-y-3 lg:order-1 lg:max-h-[calc(100vh-15rem)] lg:overflow-y-auto lg:pr-2">
               {loading
                 ? Array.from({ length: 4 }, (_, i) => <ListRowSkeleton key={i} />)
@@ -284,7 +293,7 @@ export function EventsExplorer({
                 ))}
           </div>
         ) : (
-          <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6">
+          <div className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6">
             {loading
               ? Array.from({ length: 6 }, (_, i) => <CardSkeleton key={i} />)
               : results.map((e, i) => (
@@ -314,6 +323,7 @@ function ViewToggle({ view, setView, compact }: { view: View; setView: (v: View)
         { value: "grid", label: compact ? "" : "Grid", icon: <LayoutGrid className="size-4" /> },
         { value: "list", label: compact ? "" : "List", icon: <List className="size-4" /> },
         { value: "map", label: compact ? "" : "Map", icon: <MapIcon className="size-4" /> },
+        { value: "calendar", label: compact ? "" : "Calendar", icon: <CalendarRange className="size-4" /> },
       ]}
     />
   );

@@ -18,7 +18,7 @@ export function PageIntro({
 }) {
   return (
     <section className="mx-auto max-w-[1400px] px-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
-      <div className="grid items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+      <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
         <div>
           <Eyebrow>{eyebrow}</Eyebrow>
           <h1 className="font-display mt-3 text-[2.6rem] leading-[1.02] text-balance text-ink sm:text-6xl lg:text-[4.2rem] [&_em]:text-maroon">

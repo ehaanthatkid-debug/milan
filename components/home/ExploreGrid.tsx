@@ -54,9 +54,9 @@ const tiles: Tile[] = [
   },
   {
     title: "Community",
-    blurb: "Cultural orgs, temples, and student groups",
-    meta: "40+ partners",
-    href: "/about#community",
+    blurb: "See who's going and chat before the event",
+    meta: "Meet people",
+    href: "/community",
     image: photos.sangeetMehndiParty,
     alt: "Friends gathered for a mehndi celebration",
     icon: HandHeart,

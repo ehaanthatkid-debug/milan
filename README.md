@@ -21,11 +21,22 @@ Then open http://localhost:3000.
 | --- | --- |
 | `data/events.ts` | Events: dates, venues (with map coordinates), age groups, ticket tiers, organizers |
 | `data/vendors.ts` | Vendors: services and prices, reviews, booked dates |
+| `data/people.ts` | Sample community members, who they're going with, and their replies |
+| `data/community.ts` | Seeded feed posts and conversations |
 | `data/closet.ts` | Festive Closet outfits: rent/buy prices, sizes, owners, booked dates |
 | `data/images.ts` | Every photo URL, by name — swap in your own photography here |
 | `data/shared.ts` | Cities and the service fee percentage |
 | `lib/brand.ts` | Brand name, contact email and phone |
 | `lib/promo.ts` | Promo codes |
+
+## Social, calendar, and profile
+
+- **RSVPs:** every event has Going / Interested, with friends' faces and live counts.
+- **Calendar** (`/calendar`): all events by month, or just yours and your friends'. Export your events to Apple, Google, or Outlook calendar.
+- **Community** (`/community`): an activity feed you can post to, a people directory with connect requests, direct messages, and a group chat for every event. Other members are sample people in `data/people.ts`; their replies are simulated.
+- **Profile** (`/profile`): create a profile with a photo, then track orders (delivery tracking is sped up for demos), see your events, saved items, and connections.
+
+Everything you do is saved in your browser's localStorage. **Settings → Clear demo data** resets it.
 
 ## How checkout works in the demo
 
@@ -37,7 +48,7 @@ Then open http://localhost:3000.
   - `4000 0000 0000 0002` — declined
   - `4000 0000 0000 9995` — insufficient funds
 - Apple Pay and Google Pay buttons simulate a wallet payment.
-- Completed orders appear in **My bookings** with scannable QR tickets. They're saved in the visitor's browser (localStorage), and booked dates are blocked on the calendars.
+- Completed orders appear in your **profile** with live tracking and scannable QR tickets. They're saved in the visitor's browser (localStorage), and booked dates are blocked on the calendars.
 
 ## Taking real payments
 

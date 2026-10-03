@@ -10,18 +10,18 @@ const columns = [
     title: "Explore",
     links: [
       { label: "Events", href: "/events" },
+      { label: "Calendar", href: "/calendar" },
       { label: "Festive Closet", href: "/closet" },
       { label: "Vendors", href: "/vendors" },
-      { label: "My bookings", href: "/bookings" },
     ],
   },
   {
     title: BRAND.name,
     links: [
+      { label: "Community", href: "/community" },
+      { label: "Your profile & orders", href: "/profile" },
       { label: "About", href: "/about" },
-      { label: "Community partners", href: "/about#community" },
       { label: `List with ${BRAND.name}`, href: "/about#partners" },
-      { label: "Contact", href: "/about#contact" },
     ],
   },
   {
@@ -50,7 +50,7 @@ export function SiteFooter() {
         aria-hidden="true"
       />
       <div className="relative mx-auto max-w-[1400px] px-4 pt-16 pb-32 sm:px-6 lg:px-8 lg:pt-20 lg:pb-12">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
             <div className="flex items-center gap-3">
               <MilanMark className="size-11 text-ivory" />

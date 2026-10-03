@@ -25,7 +25,7 @@ export default function VendorsPage() {
       />
       <Suspense
         fallback={
-          <div className="mx-auto mt-40 grid max-w-[1400px] gap-x-6 gap-y-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+          <div className="mx-auto mt-40 grid grid-cols-1 max-w-[1400px] gap-x-6 gap-y-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
             {Array.from({ length: 8 }, (_, i) => (
               <CardSkeleton key={i} />
             ))}

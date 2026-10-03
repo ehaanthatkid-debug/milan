@@ -104,7 +104,7 @@ export function OutfitPurchase({ outfit, serverToday }: { outfit: Outfit; server
 
       <div>
         <p className="mb-2.5 font-semibold text-ink">How you&apos;ll get it</p>
-        <div className="grid gap-2.5 sm:grid-cols-2" role="radiogroup" aria-label="Delivery method">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2" role="radiogroup" aria-label="Delivery method">
           <DeliveryOption
             active={delivery === "pickup"}
             onClick={() => setDelivery("pickup")}
@@ -135,7 +135,7 @@ export function OutfitPurchase({ outfit, serverToday }: { outfit: Outfit; server
         {cta} <ArrowRight className="size-5" />
       </Link>
 
-      <ul className="grid gap-2 text-sm text-ink-soft sm:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-2 text-sm text-ink-soft sm:grid-cols-3">
         {["Dry-cleaned & steamed", "Free fit exchange", "Damage protection"].map((t) => (
           <li key={t} className="flex items-center gap-2">
             <PackageCheck className="size-4 shrink-0 text-leaf" /> {t}

@@ -10,7 +10,7 @@ import { photos } from "@/data/images";
 import type { EventItem } from "@/data/events";
 import { CITIES } from "@/data/shared";
 import { formatShortDate } from "@/lib/utils";
-import { AvatarStack } from "@/components/ui/AvatarStack";
+import { SpotlightRsvp } from "@/components/social/Rsvp";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -232,28 +232,26 @@ function SpotlightCard({ event }: { event: EventItem }) {
       transition={{ duration: 0.9, delay: 1.2, ease }}
       className="absolute right-10 bottom-16 hidden w-80 xl:block"
     >
-      <Link
-        href={`/events/${event.slug}`}
-        className="group block rounded-3xl border border-ivory/15 bg-ivory/10 p-3 text-ivory shadow-float backdrop-blur-xl transition-colors hover:bg-ivory/15"
-      >
-        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
+      <div className="group rounded-3xl border border-ivory/15 bg-ivory/10 p-3 text-ivory shadow-float backdrop-blur-xl transition-colors hover:bg-ivory/15">
+        <Link href={`/events/${event.slug}`} className="relative block aspect-[16/10] overflow-hidden rounded-2xl">
           <Image src={event.image} alt="" fill sizes="320px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
           <span className="absolute top-2.5 left-2.5 rounded-full bg-saffron px-2.5 py-1 text-[0.7rem] font-semibold tracking-wide text-maroon-ink uppercase">
             Featured
           </span>
-        </div>
+          <span className="absolute top-2.5 right-2.5 grid size-8 place-items-center rounded-full bg-ivory text-maroon transition-transform duration-500 group-hover:rotate-45">
+            <ArrowUpRight className="size-4" />
+          </span>
+        </Link>
         <div className="px-1.5 pt-3 pb-1">
           <p className="text-xs font-medium tracking-wide text-saffron uppercase">{formatShortDate(event.date)}</p>
-          <p className="font-display mt-1 text-xl leading-snug">{event.title}</p>
-          <div className="mt-3 flex items-center justify-between">
-            <AvatarStack count={event.attending} />
-
-            <span className="grid size-8 place-items-center rounded-full bg-ivory text-maroon transition-transform duration-500 group-hover:rotate-45">
-              <ArrowUpRight className="size-4" />
-            </span>
+          <Link href={`/events/${event.slug}`} className="font-display mt-1 block text-xl leading-snug hover:underline">
+            {event.title}
+          </Link>
+          <div className="mt-3">
+            <SpotlightRsvp event={event} />
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

@@ -8,14 +8,14 @@ export function DetailSkeleton() {
       <Skeleton className="mt-6 h-5 w-40" />
       <Skeleton className="mt-4 h-14 w-full max-w-2xl" />
       <Skeleton className="mt-3 h-5 w-80" />
-      <div className="mt-8 grid h-[320px] gap-3 md:h-[460px] md:grid-cols-[2fr_1fr]">
+      <div className="mt-8 grid grid-cols-1 h-[320px] gap-3 md:h-[460px] md:grid-cols-[2fr_1fr]">
         <Skeleton className="rounded-[1.75rem]" />
         <div className="hidden gap-3 md:grid md:grid-rows-2">
           <Skeleton className="rounded-[1.75rem]" />
           <Skeleton className="rounded-[1.75rem]" />
         </div>
       </div>
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_400px]">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_400px]">
         <div className="space-y-3">
           <Skeleton className="h-8 w-60" />
           <Skeleton className="h-4 w-full" />

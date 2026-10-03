@@ -13,7 +13,7 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 pt-16 sm:px-6 lg:grid-cols-[1fr_440px] lg:px-8">
+        <div className="mx-auto grid grid-cols-1 max-w-6xl gap-10 px-4 pt-16 sm:px-6 lg:grid-cols-[1fr_440px] lg:px-8">
           <div className="space-y-4">
             <Skeleton className="h-12 w-60" />
             <Skeleton className="h-12 w-full" />

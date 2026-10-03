@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { BookingsView } from "@/components/bookings/BookingsView";
-import { toISODate } from "@/lib/utils";
+import { RedirectTo } from "@/components/ui/RedirectTo";
 
-export const metadata: Metadata = {
-  title: "My bookings",
-  robots: { index: false },
-};
+export const metadata: Metadata = { title: "My bookings", robots: { index: false } };
 
+/** Old "My bookings" links now open the Orders tab of your profile. */
 export default function BookingsPage() {
-  return <BookingsView serverToday={toISODate(new Date())} />;
+  return <RedirectTo href="/profile" />;
 }

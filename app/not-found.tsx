@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/ui/SectionHeading";
 
 export default function NotFound() {
   return (
-    <section className="mx-auto grid max-w-[1400px] items-center gap-10 px-4 pt-10 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pt-16">
+    <section className="mx-auto grid grid-cols-1 max-w-[1400px] items-center gap-10 px-4 pt-10 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pt-16">
       <div>
         <Eyebrow>Error 404</Eyebrow>
         <h1 className="font-display mt-4 text-5xl leading-[1.02] text-balance text-ink sm:text-6xl">

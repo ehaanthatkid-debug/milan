@@ -7,6 +7,29 @@ function icsDate(d: Date) {
 
 const escapeText = (s: string) => s.replace(/\\/g, "\\\\").replace(/,/g, "\\,").replace(/;/g, "\\;");
 
+type CalItem = { uid: string; title: string; start: Date | string; end: Date | string; location: string };
+
+/** Downloads one .ics file containing several events — e.g. everything you're going to. */
+export function downloadCalendarFileMulti(items: CalItem[], filename: string) {
+  const events = items.flatMap((c) => [
+    "BEGIN:VEVENT",
+    `UID:${c.uid}@${BRAND.name.toLowerCase()}`,
+    `DTSTAMP:${icsDate(new Date())}`,
+    `DTSTART:${icsDate(new Date(c.start))}`,
+    `DTEND:${icsDate(new Date(c.end))}`,
+    `SUMMARY:${escapeText(c.title)}`,
+    `LOCATION:${escapeText(c.location)}`,
+    "END:VEVENT",
+  ]);
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", `PRODID:-//${BRAND.name}//Celebrations//EN`, ...events, "END:VCALENDAR"].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 /** Downloads an .ics file the visitor can open in Apple, Google, or Outlook calendar. */
 export function downloadCalendarFile(
   c: { title: string; start: Date | string; end: Date | string; location: string },

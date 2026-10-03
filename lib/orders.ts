@@ -32,6 +32,7 @@ export type StoredOrder = {
   schedule: ScheduledPayment[];
   date?: string;
   blockDates: string[];
+  fulfillment?: "delivery" | "pickup";
   tickets?: { tierIndex: number; tierName: string; codes: string[] };
   email: string;
   name: string;

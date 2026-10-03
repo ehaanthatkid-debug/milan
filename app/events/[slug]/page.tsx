@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BadgeCheck, CalendarDays, Check, Clock, Navigation, MapPin, Smile, Users } from "lucide-react";
+import { BadgeCheck, CalendarDays, Check, Clock, Navigation, MapPin, Smile } from "lucide-react";
 import { AGE_GROUP_LABELS, events, getEvent } from "@/data/events";
 import { AgeBadge, EventCard, PriceLabel } from "@/components/cards/EventCard";
 import { BackLink, FollowButton, ShareButton } from "@/components/detail/DetailBits";
 import { PhotoMosaic } from "@/components/detail/PhotoMosaic";
 import { TicketPicker } from "@/components/events/TicketPicker";
 import { VenueMap } from "@/components/map/VenueMap";
-import { AvatarStack } from "@/components/ui/AvatarStack";
+import { RsvpPanel } from "@/components/social/Rsvp";
+import { EventChat, WhosGoing } from "@/components/social/EventSocial";
 import { Rail } from "@/components/ui/Rail";
 import { Reveal } from "@/components/ui/Reveal";
 import { SaveButton } from "@/components/ui/SaveButton";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { formatCount, formatLongDate, formatTime } from "@/lib/utils";
+import { formatLongDate, formatTime } from "@/lib/utils";
 
 export const dynamicParams = false;
 
@@ -58,7 +59,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
         </div>
         <div className="flex items-center gap-2">
           <ShareButton title={event.title} />
-          <SaveButton label={event.title} className="size-10 border border-sand bg-white/60" />
+          <SaveButton label={event.title} item={{ kind: "event", id: event.slug }} className="size-10 border border-sand bg-white/60" />
         </div>
       </header>
 
@@ -66,9 +67,9 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
         <PhotoMosaic images={[event.image, ...event.gallery]} alt={event.title} />
       </div>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
         <div className="min-w-0">
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Fact icon={<CalendarDays className="size-5" />} label="Date" value={formatLongDate(event.date)} />
             <Fact
               icon={<Clock className="size-5" />}
@@ -79,12 +80,8 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
             <Fact icon={<Smile className="size-5" />} label={AGE_GROUP_LABELS[event.ages.group]} value={event.ages.label} />
           </div>
 
-          <div className="mt-6 flex items-center gap-3 rounded-2xl bg-ivory-100 px-4 py-3 ring-1 ring-sand/70">
-            <Users className="size-4 text-maroon" />
-            <p className="text-sm text-ink-soft">
-              <span className="font-semibold text-ink">{formatCount(event.attending)} people</span> are going.
-            </p>
-            <AvatarStack count={event.attending} tone="dark" className="ml-auto hidden [&>span:last-child]:hidden sm:flex" />
+          <div className="mt-6">
+            <RsvpPanel event={event} />
           </div>
 
           <Reveal>
@@ -95,7 +92,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
                   <p key={p}>{p}</p>
                 ))}
               </div>
-              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+              <ul className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {event.highlights.map((h) => (
                   <li key={h} className="flex items-center gap-3 rounded-2xl border border-sand/70 bg-white/50 px-4 py-3">
                     <span className="grid size-7 shrink-0 place-items-center rounded-full bg-saffron-soft text-gold-deep">
@@ -107,6 +104,8 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
               </ul>
             </section>
           </Reveal>
+
+          <WhosGoing event={event} />
 
           <Reveal>
             <section className="mt-12">
@@ -160,8 +159,10 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
             </section>
           </Reveal>
 
+          <EventChat event={event} />
+
           <Reveal>
-            <section className="mt-12 grid gap-4 sm:grid-cols-3">
+            <section className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {[
                 ["Refunds", "Full refund up to 7 days before. Transfers to a friend anytime."],
                 ["Accessibility", "Step-free entry, accessible restrooms, and seating on request."],
