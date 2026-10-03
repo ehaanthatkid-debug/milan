@@ -29,7 +29,8 @@ export function BookingsView({ serverToday }: { serverToday: string }) {
 
   if (orders.length === 0) {
     return (
-      <div className="mx-auto max-w-[1400px] px-4 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl px-4 pt-8 sm:px-6 lg:px-8">
+        <h1 className="font-display mb-8 text-5xl text-ink sm:text-6xl">My bookings</h1>
         <EmptyState
           icon={<Ticket className="size-7" strokeWidth={1.6} />}
           title="No bookings yet"
