@@ -9,11 +9,14 @@ import { SERVICE_FEE_RATE } from "@/data/shared";
 import { Calendar } from "@/components/ui/Calendar";
 import { Stepper } from "@/components/events/TicketPicker";
 import { checkoutHref } from "@/lib/checkout";
+import { blockedDates, useOrders } from "@/lib/orders";
 import { useToday } from "@/lib/use-today";
 import { cn, formatMoney, formatPrice, formatShortDate } from "@/lib/utils";
 
 export function BookingCard({ vendor, serverToday }: { vendor: Vendor; serverToday: string }) {
   const today = useToday(serverToday);
+  const orders = useOrders();
+  const booked = [...vendor.bookedDates, ...blockedDates(orders, "booking", vendor.slug)];
   const [serviceIndex, setServiceIndex] = useState(0);
   const [date, setDate] = useState<string | null>(null);
   const [guests, setGuests] = useState(150);
@@ -77,7 +80,7 @@ export function BookingCard({ vendor, serverToday }: { vendor: Vendor; serverTod
           <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-ink">
             <CalendarCheck className="size-4 text-maroon" /> Check availability
           </p>
-          <Calendar today={today} booked={vendor.bookedDates} selected={date} onSelect={setDate} />
+          <Calendar today={today} booked={booked} selected={date} onSelect={setDate} />
         </div>
 
         <div className="mt-5 border-t border-sand/80 pt-4">
@@ -86,7 +89,7 @@ export function BookingCard({ vendor, serverToday }: { vendor: Vendor; serverTod
             <span className="font-display text-2xl text-ink">{formatPrice(subtotal)}</span>
           </div>
           <p className="mt-1 text-right text-xs text-ink-mute">
-            + {formatMoney(subtotal * SERVICE_FEE_RATE)} Utsav fee ({Math.round(SERVICE_FEE_RATE * 100)}%) at checkout
+            + {formatMoney(subtotal * SERVICE_FEE_RATE)} Milan fee ({Math.round(SERVICE_FEE_RATE * 100)}%) at checkout
           </p>
         </div>
 

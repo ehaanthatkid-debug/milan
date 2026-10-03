@@ -61,7 +61,7 @@ export default async function VendorPage({ params }: PageProps<"/vendors/[slug]"
             </span>
             {vendor.verified && (
               <span className="inline-flex items-center gap-1 rounded-full bg-saffron-soft px-3 py-1 text-xs font-semibold text-gold-deep">
-                <BadgeCheck className="size-3.5" /> Utsav verified
+                <BadgeCheck className="size-3.5" /> Milan verified
               </span>
             )}
             <span className="rounded-full border border-sand px-3 py-1 text-xs font-medium text-ink-soft">{vendor.priceRange}</span>

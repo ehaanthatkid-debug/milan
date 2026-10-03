@@ -159,6 +159,55 @@ export const photos = {
   kidsNavyLehengaAlt: u("photo-1785393153529-107a4729b0d2"),
   kidsRedGold: u("photo-1639563853019-779fb4e41844"),
 
+  // Eid & Ramadan
+  eidKids: u("photo-1683155586907-3aa3642fda3e"),
+  eidPrayerCrowd: u("photo-1740857116467-d404d73bfa28"),
+  lampsBazaar: u("photo-1561314945-0562f5b6d2c6"),
+  lanternWall: u("photo-1577214407836-1f3a0604ecb2"),
+  lampCorridor: u("photo-1589371315231-096e33e8c55e"),
+  lanternTwilight: u("photo-1776663158496-c98cbea8289f"),
+  lanternGlow: u("photo-1639918065925-eb39272edda2"),
+  iftarSpread: u("photo-1661994215679-cde7c2c5c060"),
+  iftarPlate: u("photo-1639664342827-2d68822c55c9"),
+  datesTasbih: u("photo-1633677658580-2535af0cfb00"),
+  teaPour: u("photo-1615403516105-fa537acc9a4b"),
+  banglesWrist: u("photo-1724720790533-160d6280fd81"),
+  banglesPile: u("photo-1718878404004-6502a550c23b"),
+  mehndiCircle: u("photo-1505932794465-147d1f1b2c97"),
+
+  // Music
+  harmoniumFlowers: u("photo-1643287928605-b8e1190615fa"),
+  tablaStage: u("photo-1524392749318-209b690c93c6"),
+  tablaClose: u("photo-1643098979608-1b22614abe88"),
+  concertStage: u("photo-1719650932798-bda508a2b209"),
+
+  // Vaisakhi
+  gatkaWheel: u("photo-1777151319380-ddb659c2ccd2"),
+  gatkaDuel: u("photo-1777150985666-1c4ab5373dac"),
+  vaisakhiCrowd: u("photo-1776804096767-5fbdfc52149c"),
+  sikhFriends: u("photo-1776803984741-46e8e544bfb1"),
+
+  // Pohela Boishakh
+  boishakhMasks: u("photo-1767330855183-4b7f427a32ed"),
+  boishakhMask: u("photo-1767330855011-fc628d33caea"),
+  bengaliSaree: u("photo-1726076584498-2064363f8b5a"),
+  ilishCurry: u("photo-1654863404432-cac67587e25d"),
+
+  // Christmas
+  churchLights: u("photo-1765533505980-27298a6abb46"),
+  choirAdvent: u("photo-1790342238884-09d15a853050"),
+  paperLanterns: u("photo-1619619779333-acd67539ca06"),
+
+  // Kids
+  kidsDrawing: u("photo-1617117206620-b01f2919ff86"),
+  kidsCraft: u("photo-1605627079912-97c3810a11a4"),
+  girlDancing: u("photo-1763735134294-77268e6f1618"),
+
+  // Clothing — sharara & gharara
+  shararaPink: u("photo-1603124552648-00e00e27d774"),
+  shararaPistachio: u("photo-1641382161690-0fd2643d9868"),
+  shararaPistachioAlt: u("photo-1641382158662-b6ef03d53f53"),
+
   // Seattle
   seattleSunset: u("photo-1589481169991-40ee02888551"),
   seattleRainier: u("photo-1535581652167-3a26c90bbf86"),

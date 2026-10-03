@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BadgeCheck, CalendarDays, Check, Clock, Navigation, MapPin, Users } from "lucide-react";
-import { events, getEvent } from "@/data/events";
-import { EventCard, PriceLabel } from "@/components/cards/EventCard";
+import { BadgeCheck, CalendarDays, Check, Clock, Navigation, MapPin, Smile, Users } from "lucide-react";
+import { AGE_GROUP_LABELS, events, getEvent } from "@/data/events";
+import { AgeBadge, EventCard, PriceLabel } from "@/components/cards/EventCard";
 import { BackLink, FollowButton, ShareButton } from "@/components/detail/DetailBits";
 import { PhotoMosaic } from "@/components/detail/PhotoMosaic";
 import { TicketPicker } from "@/components/events/TicketPicker";
@@ -49,6 +49,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
             <span className="rounded-full border border-sand px-3 py-1 text-xs font-medium text-ink-soft">
               <PriceLabel event={event} />
             </span>
+            <AgeBadge ages={event.ages} className="px-3 text-xs ring-1 ring-sand" />
           </div>
           <h1 className="font-display mt-4 text-[2.4rem] leading-[1.02] text-balance text-ink sm:text-5xl lg:text-[4rem]">
             {event.title}
@@ -67,7 +68,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
         <div className="min-w-0">
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Fact icon={<CalendarDays className="size-5" />} label="Date" value={formatLongDate(event.date)} />
             <Fact
               icon={<Clock className="size-5" />}
@@ -75,6 +76,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[sl
               value={`${formatTime(event.startTime)} – ${formatTime(event.endTime)}`}
             />
             <Fact icon={<MapPin className="size-5" />} label={event.city} value={event.venue.name.split(" — ")[0]} />
+            <Fact icon={<Smile className="size-5" />} label={AGE_GROUP_LABELS[event.ages.group]} value={event.ages.label} />
           </div>
 
           <div className="mt-6 flex items-center gap-3 rounded-2xl bg-ivory-100 px-4 py-3 ring-1 ring-sand/70">

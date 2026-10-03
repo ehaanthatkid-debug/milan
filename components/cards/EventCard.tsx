@@ -20,6 +20,22 @@ export function DateBadge({ date, className }: { date: string; className?: strin
   );
 }
 
+export function AgeBadge({ ages, className }: { ages: EventItem["ages"]; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "rounded-full px-2.5 py-1 text-[0.7rem] font-semibold tracking-wide backdrop-blur-md",
+        ages.group === "kids" && "bg-saffron text-maroon-ink",
+        ages.group === "adults" && "bg-maroon-ink/75 text-ivory",
+        ages.group === "all" && "bg-ivory/90 text-ink",
+        className,
+      )}
+    >
+      {ages.group === "kids" ? `Kids · ${ages.label.replace("Ages ", "")}` : ages.label}
+    </span>
+  );
+}
+
 export function PriceLabel({ event, className }: { event: EventItem; className?: string }) {
   if (isFree(event)) {
     return <span className={cn("font-semibold text-leaf", className)}>Free</span>;
@@ -56,6 +72,7 @@ export function EventCard({
         <span className="absolute bottom-3 left-3 rounded-full bg-maroon-ink/45 px-3 py-1 text-xs font-medium tracking-wide text-ivory backdrop-blur-md">
           {event.category}
         </span>
+        <AgeBadge ages={event.ages} className="absolute right-3 bottom-3" />
       </div>
       <div className="px-1 pt-4">
         <p className="text-xs font-semibold tracking-[0.12em] text-gold-deep uppercase">

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { DiyaMark } from "@/components/brand/Logo";
+import { MilanMark } from "@/components/brand/Logo";
 import { FacebookIcon, InstagramIcon, TikTokIcon, YouTubeIcon } from "@/components/brand/SocialIcons";
 import { OrnamentDivider } from "@/components/ui/Ornament";
+import { BRAND } from "@/lib/brand";
 
 const columns = [
   {
@@ -11,16 +12,16 @@ const columns = [
       { label: "Events", href: "/events" },
       { label: "Festive Closet", href: "/closet" },
       { label: "Vendors", href: "/vendors" },
-      { label: "Free this week", href: "/events?category=Free" },
+      { label: "My bookings", href: "/bookings" },
     ],
   },
   {
-    title: "Utsav",
+    title: BRAND.name,
     links: [
-      { label: "Our story", href: "/about" },
+      { label: "About", href: "/about" },
       { label: "Community partners", href: "/about#community" },
-      { label: "List with Utsav", href: "/about#partners" },
-      { label: "Careers", href: "/about#team" },
+      { label: `List with ${BRAND.name}`, href: "/about#partners" },
+      { label: "Contact", href: "/about#contact" },
     ],
   },
   {
@@ -43,7 +44,7 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24 overflow-hidden bg-maroon-ink text-ivory">
+    <footer className="relative mt-24 overflow-hidden bg-maroon-ink text-ivory print:hidden">
       <div
         className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-maroon/60 blur-3xl"
         aria-hidden="true"
@@ -51,22 +52,23 @@ export function SiteFooter() {
       <div className="relative mx-auto max-w-[1400px] px-4 pt-16 pb-32 sm:px-6 lg:px-8 lg:pt-20 lg:pb-12">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <div className="flex items-center gap-3 text-saffron">
-              <DiyaMark className="size-11 text-ivory" />
-              <span className="font-display text-5xl font-semibold text-ivory">Utsav</span>
+            <div className="flex items-center gap-3">
+              <MilanMark className="size-11 text-ivory" />
+              <span className="font-display text-5xl font-semibold text-ivory">{BRAND.name}</span>
             </div>
-            <p className="font-display display-italic mt-5 max-w-sm text-2xl leading-snug text-ivory/85">
-              Every festival, every fitting, every family — celebrated together.
+            <p className="mt-5 max-w-sm text-lg leading-relaxed text-ivory/80">{BRAND.tagline}.</p>
+            <p className="mt-2 text-sm tracking-wide text-ivory/50" lang="mul">
+              {BRAND.scripts.join(" · ")}
             </p>
             <div className="mt-8 space-y-3 text-sm text-ivory/70">
               <p className="flex items-center gap-3">
-                <MapPin className="size-4 text-saffron" /> Downtown Bellevue, Washington
+                <MapPin className="size-4 text-saffron" /> Bellevue, Washington
               </p>
-              <a href="mailto:hello@utsavseattle.com" className="flex items-center gap-3 transition-colors hover:text-ivory">
-                <Mail className="size-4 text-saffron" /> hello@utsavseattle.com
+              <a href={`mailto:${BRAND.email}`} className="flex items-center gap-3 transition-colors hover:text-ivory">
+                <Mail className="size-4 text-saffron" /> {BRAND.email}
               </a>
-              <a href="tel:+14255550142" className="flex items-center gap-3 transition-colors hover:text-ivory">
-                <Phone className="size-4 text-saffron" /> (425) 555-0142
+              <a href={BRAND.phoneHref} className="flex items-center gap-3 transition-colors hover:text-ivory">
+                <Phone className="size-4 text-saffron" /> {BRAND.phone}
               </a>
             </div>
           </div>
@@ -92,13 +94,15 @@ export function SiteFooter() {
         <OrnamentDivider className="mt-14 text-gold/70" />
 
         <div className="mt-8 flex flex-col-reverse items-start justify-between gap-6 text-sm text-ivory/55 sm:flex-row sm:items-center">
-          <p>© 2026 Utsav Technologies, Inc. Made with love in Bellevue.</p>
+          <p>
+            © 2026 {BRAND.name}. Based in Bellevue, WA. Demo site — listings are illustrative.
+          </p>
           <div className="flex items-center gap-2">
             {socials.map(({ label, href, Icon }) => (
               <a
                 key={label}
                 href={href}
-                aria-label={`Utsav on ${label}`}
+                aria-label={`${BRAND.name} on ${label}`}
                 target="_blank"
                 rel="noreferrer"
                 className="grid size-10 place-items-center rounded-full border border-ivory/15 text-ivory/80 transition-all hover:-translate-y-0.5 hover:border-saffron hover:text-saffron"

@@ -3,16 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { MapPin, Search } from "lucide-react";
+import { MapPin, Search, Ticket } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { ButtonLink } from "@/components/ui/Button";
+import { useOrders } from "@/lib/orders";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, isActive } from "./nav-items";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const orderCount = useOrders().length;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -24,7 +26,7 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-500",
+        "sticky top-0 z-50 transition-all duration-500 print:hidden",
         scrolled ? "border-b border-sand/70 bg-ivory/85 backdrop-blur-xl" : "border-b border-transparent bg-ivory",
       )}
     >
@@ -68,8 +70,23 @@ export function SiteHeader() {
           >
             <Search className="size-5" />
           </Link>
+          <Link
+            href="/bookings"
+            aria-label={orderCount ? `My bookings (${orderCount})` : "My bookings"}
+            className={cn(
+              "relative grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/5",
+              isActive(pathname, "/bookings") && "bg-maroon-soft text-maroon",
+            )}
+          >
+            <Ticket className="size-5" />
+            {orderCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 grid min-w-5 place-items-center rounded-full bg-maroon px-1 text-[0.65rem] leading-5 font-bold text-ivory ring-2 ring-ivory">
+                {orderCount}
+              </span>
+            )}
+          </Link>
           <ButtonLink href="/about#partners" size="sm" className="hidden lg:inline-flex">
-            List with Utsav
+            List with Milan
           </ButtonLink>
         </div>
       </div>

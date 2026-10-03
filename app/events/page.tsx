@@ -8,7 +8,7 @@ import { toISODate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Events",
-  description: "Garba, Diwali, Holi, wedding, and collegiate events across Seattle, Bellevue, Redmond, Sammamish, and Kirkland.",
+  description: "Eid, Navratri, Diwali, Vaisakhi, Holi, music, wedding, and campus events across Seattle, Bellevue, Redmond, Sammamish, and Kirkland.",
 };
 
 export default function EventsPage() {
@@ -21,8 +21,8 @@ export default function EventsPage() {
             Find your next <em>celebration</em>
           </>
         }
-        description="Garba nights, Diwali melas, Holi in the park, wedding showcases, and campus shows — every South Asian event across Seattle and the Eastside, in one calendar."
-        images={[photos.garbaTwirl, photos.diyaTray, photos.holiPortrait]}
+        description="Eid festivals, garba nights, Diwali melas, Vaisakhi, qawwali, Holi, and kids' workshops — South Asian events from every tradition across Seattle and the Eastside, in one calendar."
+        images={[photos.garbaTwirl, photos.lampsBazaar, photos.gatkaWheel]}
       />
       <Suspense
         fallback={

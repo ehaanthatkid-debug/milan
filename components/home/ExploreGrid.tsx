@@ -70,7 +70,7 @@ export function ExploreGrid() {
     <section className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6 lg:px-8 lg:pt-24">
       <Reveal>
         <SectionHeading
-          eyebrow="Explore Utsav"
+          eyebrow="Explore Milan"
           title={
             <>
               Everything the season <em>asks of you</em>

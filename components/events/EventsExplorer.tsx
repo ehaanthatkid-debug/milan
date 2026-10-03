@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, CircleDollarSign, LayoutGrid, List, Map as MapIcon, MapPin, Search, X } from "lucide-react";
+import { CalendarDays, CircleDollarSign, LayoutGrid, List, Map as MapIcon, MapPin, Search, Users, X } from "lucide-react";
 import { useMemo, useState } from "react";
-import { EVENT_CATEGORIES, events, fromPrice, isFree, type EventItem } from "@/data/events";
+import { AGE_GROUPS, AGE_GROUP_LABELS, EVENT_CATEGORIES, events, fromPrice, isFree, type AgeGroup, type EventItem } from "@/data/events";
 import { CITIES } from "@/data/shared";
 import { EventCard } from "@/components/cards/EventCard";
 import { EventRow } from "./EventRow";
@@ -18,6 +18,7 @@ import { daysBetween, monthShort, dayOfMonth, parseLocalDate } from "@/lib/utils
 type View = "grid" | "list" | "map";
 type DateFilter = "any" | "week" | "weekend" | "month" | "later";
 type PriceFilter = "any" | "free" | "under25" | "25to75" | "over75";
+type AgeFilter = "any" | AgeGroup;
 
 const CATEGORY_OPTIONS = ["All", ...EVENT_CATEGORIES, "Free"] as const;
 
@@ -38,6 +39,11 @@ const PRICE_OPTIONS: { value: PriceFilter; label: string }[] = [
 ];
 
 const CITY_OPTIONS = [{ value: "", label: "All cities" }, ...CITIES.map((c) => ({ value: c, label: c }))];
+
+const AGE_OPTIONS: { value: AgeFilter; label: string }[] = [
+  { value: "any", label: "Any age" },
+  ...AGE_GROUPS.map((g) => ({ value: g, label: AGE_GROUP_LABELS[g] })),
+];
 
 function matchesDate(e: EventItem, filter: DateFilter, today: string) {
   const now = parseLocalDate(today);
@@ -83,7 +89,7 @@ export function EventsExplorer({
   initial,
 }: {
   serverToday: string;
-  initial: { q?: string; category?: string; city?: string };
+  initial: { q?: string; category?: string; city?: string; age?: string };
 }) {
   const today = useToday(serverToday);
   const [q, setQ] = useState(initial.q ?? "");
@@ -93,6 +99,9 @@ export function EventsExplorer({
   const [city, setCity] = useState(CITIES.includes(initial.city as (typeof CITIES)[number]) ? initial.city! : "");
   const [date, setDate] = useState<DateFilter>("any");
   const [price, setPrice] = useState<PriceFilter>("any");
+  const [age, setAge] = useState<AgeFilter>(
+    AGE_GROUPS.includes(initial.age as AgeGroup) ? (initial.age as AgeGroup) : "any",
+  );
   const [view, setView] = useState<View>("grid");
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
@@ -103,20 +112,22 @@ export function EventsExplorer({
       .filter((e) => {
         if (category === "Free" ? !isFree(e) : category !== "All" && e.category !== category) return false;
         if (city && e.city !== city) return false;
+        if (age !== "any" && e.ages.group !== age) return false;
         if (!matchesDate(e, date, today) || !matchesPrice(e, price)) return false;
         if (needle) {
-          const hay = [e.title, e.tagline, e.category, e.city, e.neighborhood, e.venue.name, e.organizer.name]
+          const hay = [e.title, e.tagline, e.category, e.city, e.neighborhood, e.venue.name, e.organizer.name, e.ages.label]
             .join(" ")
             .toLowerCase();
           return needle.split(/\s+/).every((w) => hay.includes(w));
         }
         return true;
       });
-  }, [q, category, city, date, price, today]);
+  }, [q, category, city, date, price, age, today]);
 
-  const filterKey = [q.trim(), category, city, date, price].join("|");
+  const filterKey = [q.trim(), category, city, date, price, age].join("|");
   const loading = useSimulatedLoading(filterKey);
-  const hasFilters = q.trim() !== "" || category !== "All" || city !== "" || date !== "any" || price !== "any";
+  const hasFilters =
+    q.trim() !== "" || category !== "All" || city !== "" || date !== "any" || price !== "any" || age !== "any";
 
   function clearAll() {
     setQ("");
@@ -124,6 +135,7 @@ export function EventsExplorer({
     setCity("");
     setDate("any");
     setPrice("any");
+    setAge("any");
   }
 
   const pins: Pin[] = results.map((e) => ({
@@ -183,6 +195,13 @@ export function EventsExplorer({
               onChange={(v) => setPrice(v as PriceFilter)}
               options={PRICE_OPTIONS}
               icon={<CircleDollarSign className="pointer-events-none size-4" />}
+            />
+            <SelectPill
+              label="Ages"
+              value={age}
+              onChange={(v) => setAge(v as AgeFilter)}
+              options={AGE_OPTIONS}
+              icon={<Users className="pointer-events-none size-4" />}
             />
             <SelectPill
               label="City"

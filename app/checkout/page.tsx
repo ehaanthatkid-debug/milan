@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { CheckoutView } from "@/components/checkout/CheckoutView";
 import { Skeleton } from "@/components/ui/States";
+import { toISODate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -23,7 +24,7 @@ export default function CheckoutPage() {
         </div>
       }
     >
-      <CheckoutView />
+      <CheckoutView serverToday={toISODate(new Date())} />
     </Suspense>
   );
 }

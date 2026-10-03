@@ -14,7 +14,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="pb-safe fixed inset-x-0 bottom-0 z-50 px-3 pt-2 lg:hidden"
+      className="pb-safe fixed inset-x-0 bottom-0 z-50 px-3 pt-2 lg:hidden print:hidden"
     >
       <div className="mx-auto mb-3 flex max-w-md items-center justify-between rounded-full border border-sand/80 bg-ivory/90 p-1.5 shadow-[0_12px_40px_-12px_rgb(54_9_20/0.35)] backdrop-blur-xl">
         {NAV_ITEMS.map((item) => {

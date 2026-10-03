@@ -1,51 +1,74 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, Briefcase, HandHeart, Leaf, MapPin, Shirt, Sparkles, Store, Ticket, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone, Shirt, Store, Ticket } from "lucide-react";
 import { photos } from "@/data/images";
 import { events } from "@/data/events";
+import { SERVICE_FEE_RATE } from "@/data/shared";
 import { Reveal } from "@/components/ui/Reveal";
 import { Eyebrow, SectionHeading } from "@/components/ui/SectionHeading";
-import { Ornament, OrnamentDivider } from "@/components/ui/Ornament";
+import { Ornament } from "@/components/ui/Ornament";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Utsav is the home for South Asian celebrations in Seattle and the Eastside — events, vendors, and festive wear in one place.",
+  description: `${BRAND.name} is where people in the Seattle area find South Asian events, book vendors, and rent festive wear.`,
 };
 
-const timeline = [
-  { year: "2023", title: "A shared spreadsheet", text: "Eastside garba nights, listed in one place. 4,000 people opened it in a single Navratri." },
-  { year: "2024", title: "The vendor directory", text: "Forty mehndi artists, DJs, and caterers — with real reviews from families who booked them." },
-  { year: "2025", title: "The Festive Closet", text: "Three Bellevue boutiques started renting lehengas and sherwanis. Neighbors followed." },
-  { year: "2026", title: "Tickets & bookings", text: "Checkout for events, rentals, and vendors across five cities — one account for every celebration." },
+const feePercent = Math.round(SERVICE_FEE_RATE * 100);
+
+const offerings = [
+  {
+    icon: Ticket,
+    title: "Events",
+    text: "Find events across the region, filter by date, age, price, and city, and buy tickets or RSVP in under a minute.",
+    href: "/events",
+  },
+  {
+    icon: Store,
+    title: "Vendors",
+    text: "Compare DJs, caterers, mehndi artists, decorators, and photographers with listed prices, reviews, and open dates.",
+    href: "/vendors",
+  },
+  {
+    icon: Shirt,
+    title: "Festive Closet",
+    text: "Rent an outfit for four days or buy a pre-loved piece from local boutiques and neighbors.",
+    href: "/closet",
+  },
+];
+
+const calendar = [
+  { months: "Jan", items: ["Lohri", "Pongal", "Makar Sankranti"] },
+  { months: "Feb – Mar", items: ["Ramadan", "Eid al-Fitr", "Holi"] },
+  { months: "Apr", items: ["Vaisakhi", "Pohela Boishakh", "Puthandu"] },
+  { months: "May – Jun", items: ["Eid al-Adha", "Buddha Purnima"] },
+  { months: "Aug – Sep", items: ["Independence Days", "Raksha Bandhan", "Onam"] },
+  { months: "Oct", items: ["Navratri", "Durga Puja", "Dussehra"] },
+  { months: "Nov", items: ["Diwali", "Bandi Chhor Divas", "Gurpurab"] },
+  { months: "Dec", items: ["Christmas", "Wedding season"] },
 ];
 
 const cities = [
-  { name: "Seattle", text: "Campus shows in the U-District, melas at Seattle Center, and SoDo garba raves." },
-  { name: "Bellevue", text: "The Eastside's biggest Navratri nights, galas, and bridal boutiques." },
-  { name: "Redmond", text: "Holi at Marymoor, Diwali pujas, and a deep bench of vendors." },
-  { name: "Sammamish", text: "Family festivals, language schools, and weekend bazaars." },
-  { name: "Kirkland", text: "Lakeside Diwali lights and studio mehndi artists." },
-];
-
-const values = [
-  { icon: Sparkles, title: "Culture first", text: "We design for aarti timings, family WhatsApp groups, and the auntie who needs large text." },
-  { icon: MapPin, title: "Local by default", text: "Every vendor and boutique on Utsav is based in Washington. Money stays in the community." },
-  { icon: Users, title: "Everyone's invited", text: "Gujarati or Tamil, Punjabi or Bengali, first garba or fiftieth — there's a place for you." },
-  { icon: Leaf, title: "Celebrate sustainably", text: "A lehenga worn once shouldn't live in a closet. Renting and resale keep it dancing." },
+  { name: "Seattle", text: "Campus shows in the U-District and festivals at Seattle Center." },
+  { name: "Bellevue", text: "The largest Navratri nights, night markets, and bridal boutiques." },
+  { name: "Redmond", text: "Holi at Marymoor, Chand Raat, and many of our vendors." },
+  { name: "Sammamish", text: "Family festivals, libraries, and weekend bazaars." },
+  { name: "Kirkland", text: "Vaisakhi by the lake and concerts downtown." },
 ];
 
 const partnerTypes = [
   {
     icon: Ticket,
     title: "Event organizers",
-    text: "Sell tickets, manage RSVPs, and reach 12,000 local subscribers. Free for community nonprofits.",
-    subject: "Listing an event on Utsav",
+    text: "Sell tickets and manage RSVPs. Free events and registered nonprofits pay nothing.",
+    subject: `Listing an event on ${BRAND.name}`,
   },
   {
     icon: Store,
     title: "Vendors",
-    text: "Get booked by families who've already read your reviews. Payments held securely until after the event.",
-    subject: "Joining Utsav as a vendor",
+    text: "Show your prices and open dates, and get paid after each event.",
+    subject: `Joining ${BRAND.name} as a vendor`,
   },
   {
     icon: Shirt,
@@ -55,28 +78,26 @@ const partnerTypes = [
   },
 ];
 
-const roles = [
-  { title: "Founding engineer", place: "Bellevue · Hybrid" },
-  { title: "Community partnerships lead", place: "Seattle · Hybrid" },
-  { title: "Vendor success associate", place: "Eastside · Part-time" },
-];
-
 export default function AboutPage() {
-  const partners = Array.from(new Set(events.map((e) => e.organizer.name))).filter((n) => n !== "Utsav Presents");
+  const partners = Array.from(new Set(events.map((e) => e.organizer.name))).filter((n) => !n.startsWith(BRAND.name));
 
   return (
     <>
       <section className="mx-auto max-w-[1400px] px-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <div>
-            <Eyebrow>Our story</Eyebrow>
-            <h1 className="font-display mt-4 text-[2.8rem] leading-[1] text-balance text-ink sm:text-6xl lg:text-[4.6rem]">
-              Built by the community, for <em className="text-maroon">every celebration.</em>
+            <Eyebrow>About {BRAND.name}</Eyebrow>
+            <h1 className="font-display mt-4 text-[2.7rem] leading-[1.02] text-balance text-ink sm:text-6xl lg:text-[4.2rem]">
+              One place for South Asian celebrations in <em className="text-maroon">Seattle.</em>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
-              <span className="font-display display-italic text-ink">Utsav</span> means celebration. We&apos;re building the home
-              for South Asian life in Seattle and the Eastside — where you find the garba night, book the mehndi artist, and borrow
-              the lehenga, all in one place.
+            <p className="mt-5 text-lg text-ink-mute" lang="mul">
+              {BRAND.scripts.join(" · ")} <span className="text-ink-soft">— “coming together”</span>
+            </p>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+              {BRAND.name} is where people in the Seattle area find South Asian events, book the vendors behind them, and rent
+              or buy festive clothes. It&apos;s for every tradition in the community — Hindu, Muslim, Sikh, Christian, Jain,
+              Buddhist, and secular — and every part of the diaspora, from India and Pakistan to Bangladesh, Sri Lanka, and
+              Nepal.
             </p>
           </div>
           <div className="relative">
@@ -95,61 +116,93 @@ export default function AboutPage() {
                 <MapPin className="size-5" />
               </span>
               <div>
-                <p className="text-sm font-semibold text-ink">Made in Bellevue, WA</p>
-                <p className="text-xs text-ink-mute">Serving 5 cities across the Puget Sound</p>
+                <p className="text-sm font-semibold text-ink">Based in Bellevue, WA</p>
+                <p className="text-xs text-ink-mute">Seattle · Bellevue · Redmond · Sammamish · Kirkland</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 pt-24 text-center sm:px-6 lg:pt-32">
+      <section className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
         <Reveal>
-          <OrnamentDivider className="mx-auto max-w-xs" />
-          <p className="font-display mt-8 text-[1.9rem] leading-[1.2] text-balance text-ink sm:text-5xl sm:leading-[1.15]">
-            Our mission is to make every celebration <em className="text-maroon">easier to find</em>, easier to plan, and{" "}
-            <em className="text-maroon">open to everyone</em> who wants to join in.
-          </p>
+          <SectionHeading eyebrow="What we do" title={<>Events, vendors, and <em>festive wear</em></>} />
         </Reveal>
+        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:gap-6">
+          {offerings.map(({ icon: Icon, title, text, href }, i) => (
+            <Reveal key={title} delay={i * 0.07}>
+              <Link
+                href={href}
+                className="group flex h-full flex-col rounded-3xl border border-sand/80 bg-white/60 p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift lg:p-7"
+              >
+                <span className="grid size-12 place-items-center rounded-2xl bg-maroon-soft text-maroon">
+                  <Icon className="size-5" />
+                </span>
+                <p className="font-display mt-5 text-2xl text-ink">{title}</p>
+                <p className="mt-2 flex-1 leading-relaxed text-ink-soft">{text}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-maroon">
+                  Browse {title.toLowerCase()} <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       <section className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal>
-            <Eyebrow>How it started</Eyebrow>
+            <Eyebrow>Why it exists</Eyebrow>
             <h2 className="font-display mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
-              It began with a <em className="text-maroon">group chat.</em>
+              Good events are <em className="text-maroon">too easy to miss.</em>
             </h2>
-            <div className="mt-6 space-y-4 text-[1.05rem] leading-relaxed text-ink-soft">
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="space-y-5 text-[1.05rem] leading-relaxed text-ink-soft">
               <p>
-                Every fall, the same questions flood our phones. Where&apos;s the best garba this weekend? Who does bridal mehndi in
-                Redmond? Does anyone have a sherwani in a 40 I can borrow for Saturday?
+                South Asian events in the Seattle area are spread across WhatsApp forwards, Instagram stories, and flyers at
+                community centers. If you&apos;re new to the area — or not in the right group chat — you often hear about a
+                festival after it&apos;s over.
               </p>
               <p>
-                The answers lived in forwarded flyers, temple bulletin boards, and a cousin&apos;s friend&apos;s Instagram. Newcomers to
-                the area missed out entirely. Small vendors spent their evenings answering the same texts.
+                Booking vendors is slow for the same reason. Prices usually aren&apos;t listed, checking a date takes a phone
+                call, and reviews live in other people&apos;s chats.
               </p>
               <p>
-                So we started collecting it all in one place — and the community kept adding to it. Today Utsav helps families,
-                students, and new arrivals find their people, their plans, and their outfit for every festival of the year.
+                And most festive outfits are worn once or twice. Renting and resale make them cheaper to wear and keep them in
+                use.
+              </p>
+              <p className="font-medium text-ink">
+                {BRAND.name} puts events, vendors, and outfits in one place, with clear prices, dates, and reviews.
               </p>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
-            <ol className="relative space-y-8 before:absolute before:top-3 before:bottom-3 before:left-[2.1rem] before:w-px before:bg-gradient-to-b before:from-gold/60 before:to-sand">
-              {timeline.map((t) => (
-                <li key={t.year} className="relative flex gap-5">
-                  <span className="font-display relative z-10 grid h-11 w-[4.2rem] shrink-0 place-items-center rounded-full bg-maroon text-sm font-semibold text-ivory ring-4 ring-ivory">
-                    {t.year}
-                  </span>
-                  <div className="rounded-2xl border border-sand/80 bg-white/60 p-5">
-                    <p className="font-display text-xl text-ink">{t.title}</p>
-                    <p className="mt-1.5 leading-relaxed text-ink-soft">{t.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Every tradition"
+            title={<>Something to celebrate <em>almost every month</em></>}
+            description="The calendar isn't just Diwali season. These are the festivals and occasions our community celebrates through the year."
+          />
+        </Reveal>
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:gap-4">
+          {calendar.map((c, i) => (
+            <Reveal key={c.months} delay={i * 0.04}>
+              <div className="h-full rounded-2xl border border-sand/80 bg-white/55 p-4 sm:p-5">
+                <p className="text-xs font-semibold tracking-[0.16em] text-gold-deep uppercase">{c.months}</p>
+                <ul className="mt-2.5 space-y-1">
+                  {c.items.map((item) => (
+                    <li key={item} className="font-display text-lg leading-snug text-ink">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
@@ -160,13 +213,9 @@ export default function AboutPage() {
           <div className="relative px-6 py-14 sm:px-12 lg:px-16 lg:py-20">
             <SectionHeading
               tone="light"
-              eyebrow="Our community"
-              title={
-                <>
-                  Rooted in the <em>Puget Sound</em>
-                </>
-              }
-              description="The Seattle area is home to one of the fastest-growing South Asian communities in the country — engineers and aunties, students and small-business owners, families here for generations and families here for six months."
+              eyebrow="Where we are"
+              title={<>Five cities, <em>one community</em></>}
+              description="The Puget Sound region is home to one of the largest South Asian communities on the West Coast. We started on the Eastside and cover the whole area."
             />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {cities.map((c, i) => (
@@ -181,7 +230,7 @@ export default function AboutPage() {
               ))}
             </div>
             <div className="mt-14 border-t border-ivory/15 pt-10">
-              <p className="text-xs font-semibold tracking-[0.2em] text-saffron uppercase">Community partners</p>
+              <p className="text-xs font-semibold tracking-[0.2em] text-saffron uppercase">Organizers on {BRAND.name}</p>
               <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-4">
                 {partners.map((p) => (
                   <li key={p} className="font-display text-lg text-ivory/85 sm:text-xl">
@@ -194,52 +243,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
-        <Reveal>
-          <SectionHeading
-            eyebrow="What we believe"
-            title={
-              <>
-                Values we <em>celebrate by</em>
-              </>
-            }
-          />
-        </Reveal>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {values.map(({ icon: Icon, title, text }, i) => (
-            <Reveal key={title} delay={i * 0.07}>
-              <div className="h-full rounded-3xl border border-sand/80 bg-white/60 p-6 shadow-card">
-                <span className="grid size-12 place-items-center rounded-2xl bg-maroon-soft text-maroon">
-                  <Icon className="size-5" />
-                </span>
-                <p className="font-display mt-5 text-2xl text-ink">{title}</p>
-                <p className="mt-2 leading-relaxed text-ink-soft">{text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       <section id="partners" className="mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
         <div className="grid gap-10 rounded-[2rem] bg-ivory-100 p-6 ring-1 ring-sand/70 sm:p-10 lg:grid-cols-[1fr_1.6fr] lg:gap-14 lg:rounded-[2.5rem] lg:p-16">
           <Reveal>
-            <Eyebrow>List with Utsav</Eyebrow>
+            <Eyebrow>List with {BRAND.name}</Eyebrow>
             <h2 className="font-display mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
-              Grow with the <em className="text-maroon">community.</em>
+              Free to list. <em className="text-maroon">{feePercent}% when you get paid.</em>
             </h2>
             <p className="mt-5 leading-relaxed text-ink-soft">
-              Organizers, vendors, and boutiques use Utsav to reach families across Seattle and the Eastside. Listing is free —
-              we only earn a small fee when you get paid.
+              Listing an event, service, or outfit costs nothing. On paid orders, buyers pay a {feePercent}% service fee shown
+              at checkout; it covers payment processing and refunds when plans fall through. Free events and registered
+              nonprofits pay no fees.
             </p>
-            <div className="mt-6 flex items-center gap-3 text-sm text-ink-soft">
-              <HandHeart className="size-5 text-maroon" /> 0% fees for registered community nonprofits
-            </div>
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {partnerTypes.map(({ icon: Icon, title, text, subject }, i) => (
               <Reveal key={title} delay={i * 0.08}>
                 <a
-                  href={`mailto:partners@utsavseattle.com?subject=${encodeURIComponent(subject)}`}
+                  href={`mailto:${BRAND.partnersEmail}?subject=${encodeURIComponent(subject)}`}
                   className="group flex h-full flex-col rounded-3xl border border-sand/80 bg-white/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-maroon/30 hover:shadow-lift"
                 >
                   <span className="grid size-12 place-items-center rounded-2xl bg-maroon text-ivory">
@@ -248,7 +269,8 @@ export default function AboutPage() {
                   <p className="font-display mt-5 text-2xl text-ink">{title}</p>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{text}</p>
                   <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-maroon">
-                    Apply to list <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    Apply to list{" "}
+                    <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 </a>
               </Reveal>
@@ -257,39 +279,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="team" className="mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
+      <section id="contact" className="mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-14">
+          <div className="flex flex-col gap-8 border-t border-sand pt-12 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <Eyebrow>Careers</Eyebrow>
-              <h2 className="font-display mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
-                Help us build the <em className="text-maroon">next chapter.</em>
-              </h2>
-              <p className="mt-4 leading-relaxed text-ink-soft">
-                A small team in Bellevue, obsessed with details and fluent in both product roadmaps and wedding timelines.
-              </p>
+              <Eyebrow>Contact</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl text-ink sm:text-5xl">Questions or ideas? Write to us.</h2>
             </div>
-            <ul className="divide-y divide-sand/80 rounded-3xl border border-sand/80 bg-white/60">
-              {roles.map((r) => (
-                <li key={r.title}>
-                  <a
-                    href={`mailto:careers@utsavseattle.com?subject=${encodeURIComponent(r.title)}`}
-                    className="group flex items-center justify-between gap-4 px-6 py-5 transition-colors hover:bg-white"
-                  >
-                    <span className="flex items-center gap-4">
-                      <span className="grid size-10 place-items-center rounded-xl bg-ivory-200 text-maroon">
-                        <Briefcase className="size-4" />
-                      </span>
-                      <span>
-                        <span className="block font-semibold text-ink">{r.title}</span>
-                        <span className="block text-sm text-ink-mute">{r.place}</span>
-                      </span>
-                    </span>
-                    <ArrowUpRight className="size-5 text-ink-mute transition-all group-hover:text-maroon" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col gap-3 text-ink-soft sm:flex-row sm:gap-8">
+              <a href={`mailto:${BRAND.email}`} className="inline-flex items-center gap-2 hover:text-maroon">
+                <Mail className="size-4 text-maroon" /> {BRAND.email}
+              </a>
+              <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 hover:text-maroon">
+                <Phone className="size-4 text-maroon" /> {BRAND.phone}
+              </a>
+              <span className="inline-flex items-center gap-2">
+                <MapPin className="size-4 text-maroon" /> Bellevue, WA
+              </span>
+            </div>
           </div>
         </Reveal>
       </section>

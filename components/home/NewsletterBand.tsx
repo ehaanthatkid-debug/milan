@@ -31,11 +31,11 @@ export function NewsletterBand() {
           <div>
             <Eyebrow tone="light">The Thursday Letter</Eyebrow>
             <h2 className="font-display mt-3 text-[2.1rem] leading-[1.05] sm:text-5xl">
-              Never miss a <em className="text-saffron">garba night</em> again.
+              Never miss a <em className="text-saffron">celebration</em> again.
             </h2>
             <p className="mt-4 max-w-md text-ivory/75 sm:text-lg">
-              One email every Thursday: the weekend&apos;s best events, new closet arrivals, and vendor openings — curated for
-              the Eastside.
+              One email every Thursday with the weekend&apos;s events, new closet arrivals, and vendor openings across Seattle
+              and the Eastside.
             </p>
           </div>
           <div className="min-h-[7.5rem]">
@@ -50,7 +50,7 @@ export function NewsletterBand() {
                   <CircleCheck className="mt-0.5 size-6 shrink-0 text-saffron" />
                   <div>
                     <p className="font-semibold">You&apos;re on the list.</p>
-                    <p className="mt-1 text-sm text-ivory/75">Your first letter arrives Thursday morning. Shubh utsav!</p>
+                    <p className="mt-1 text-sm text-ivory/75">Your first email arrives Thursday morning.</p>
                   </div>
                 </motion.div>
               ) : (

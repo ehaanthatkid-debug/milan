@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock, MapPin } from "lucide-react";
 import type { EventItem } from "@/data/events";
-import { DateBadge, PriceLabel } from "@/components/cards/EventCard";
+import { AgeBadge, DateBadge, PriceLabel } from "@/components/cards/EventCard";
 import { cn, formatCount, formatShortDate, formatTime } from "@/lib/utils";
 
 /** Horizontal event row used in list view and next to the map. */
@@ -44,9 +44,12 @@ export function EventRow({
         {!compact && <DateBadge date={event.date} className="absolute top-2 left-2 hidden scale-90 sm:flex" />}
       </div>
       <div className="flex min-w-0 flex-1 flex-col py-1">
-        <p className="text-[0.7rem] font-semibold tracking-[0.12em] text-gold-deep uppercase">
-          {event.category} · {formatShortDate(event.date)}
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-[0.7rem] font-semibold tracking-[0.12em] text-gold-deep uppercase">
+            {event.category} · {formatShortDate(event.date)}
+          </p>
+          <AgeBadge ages={event.ages} className="px-2 py-0.5 text-[0.65rem] ring-1 ring-sand/70" />
+        </div>
         <h3
           className={cn(
             "font-display mt-1 leading-snug text-ink transition-colors group-hover:text-maroon",

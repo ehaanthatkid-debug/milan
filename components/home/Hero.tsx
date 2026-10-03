@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, MapPin, Search, Sparkles } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { photos } from "@/data/images";
 import type { EventItem } from "@/data/events";
 import { CITIES } from "@/data/shared";
@@ -16,9 +16,18 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const popular = [
   { label: "Garba this weekend", href: "/events?category=Garba" },
+  { label: "Eid & Ramadan", href: "/events?category=Eid" },
+  { label: "Kids' events", href: "/events?age=kids" },
   { label: "Lehenga rentals", href: "/closet" },
-  { label: "Mehndi artists", href: "/vendors?category=Mehndi+artists" },
   { label: "Free events", href: "/events?category=Free" },
+];
+
+/** The hero slowly cross-fades between celebrations from different traditions. */
+const slides = [
+  { src: photos.garbaDiyasHero, alt: "Dancers gather around a garbo lit with diyas during Navratri", position: "object-[35%_center] lg:object-center", label: "Navratri · Bellevue" },
+  { src: photos.lampsBazaar, alt: "Glowing lanterns at a Ramadan night market", position: "object-center", label: "Ramadan Night Market · Bellevue" },
+  { src: photos.gatkaWheel, alt: "Gatka performers in blue at a Vaisakhi procession", position: "object-center", label: "Vaisakhi Mela · Kirkland" },
+  { src: photos.holiCrowd, alt: "A crowd throwing colored powder at a Holi festival", position: "object-center", label: "Holi · Redmond" },
 ];
 
 const headline = ["Where", "Seattle", "comes", "together", "to"];
@@ -27,6 +36,12 @@ export function Hero({ spotlight }: { spotlight: EventItem }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("");
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setSlide((s) => (s + 1) % slides.length), 6500);
+    return () => clearInterval(t);
+  }, []);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -45,17 +60,53 @@ export function Hero({ spotlight }: { spotlight: EventItem }) {
           animate={{ scale: 1 }}
           transition={{ duration: 2.2, ease }}
         >
-          <Image
-            src={photos.garbaDiyasHero}
-            alt="Dancers gather around a garbo lit with diyas and marigolds during Navratri"
-            fill
-            preload
-            quality={80}
-            sizes="(min-width: 1400px) 1400px, 100vw"
-            className="object-cover object-[35%_center] lg:object-center"
-          />
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={slide}
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 1.06 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ opacity: { duration: 1.6 }, scale: { duration: 7, ease: "linear" } }}
+            >
+              <Image
+                src={slides[slide].src}
+                alt={slides[slide].alt}
+                fill
+                preload={slide === 0}
+                quality={80}
+                sizes="(min-width: 1400px) 1400px, 100vw"
+                className={`object-cover ${slides[slide].position}`}
+              />
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-maroon-ink via-maroon-ink/40 to-transparent" />
+        <div className="absolute top-4 right-4 z-10 flex items-center gap-3 rounded-full bg-maroon-ink/40 py-1.5 pr-2 pl-3.5 text-xs text-ivory/85 backdrop-blur-md sm:top-6 sm:right-6">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={slide}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              className="hidden sm:inline"
+            >
+              {slides[slide].label}
+            </motion.span>
+          </AnimatePresence>
+          <span className="flex gap-1.5">
+            {slides.map((sl, i) => (
+              <button
+                key={sl.label}
+                type="button"
+                aria-label={`Show ${sl.label}`}
+                aria-current={i === slide}
+                onClick={() => setSlide(i)}
+                className={`h-1.5 rounded-full transition-all duration-500 ${i === slide ? "w-5 bg-saffron" : "w-1.5 bg-ivory/50 hover:bg-ivory/80"}`}
+              />
+            ))}
+          </span>
+        </div>
         <div className="absolute inset-0 hidden bg-gradient-to-r from-maroon-ink/75 via-maroon-ink/15 to-transparent lg:block" />
 
         <div className="relative flex min-h-[640px] flex-col justify-end px-5 pt-24 pb-7 sm:px-10 sm:pb-10 lg:min-h-[700px] lg:px-16 lg:pb-16">
@@ -66,7 +117,7 @@ export function Hero({ spotlight }: { spotlight: EventItem }) {
             className="inline-flex w-fit items-center gap-2 rounded-full border border-ivory/20 bg-ivory/10 px-3.5 py-1.5 text-xs font-medium text-ivory/90 backdrop-blur-md sm:text-sm"
           >
             <Sparkles className="size-3.5 text-saffron" />
-            Navratri begins Oct 11<span className="hidden sm:inline"> — garba nights are filling fast</span>
+            This month: Navratri, Diwali &amp; a qawwali night<span className="hidden sm:inline"> in Kirkland</span>
           </motion.p>
 
           <h1 className="font-display mt-5 max-w-3xl text-[2.9rem] leading-[0.98] text-ivory sm:text-6xl lg:text-[5.4rem]">
@@ -100,8 +151,8 @@ export function Hero({ spotlight }: { spotlight: EventItem }) {
             transition={{ duration: 0.7, delay: 0.75, ease }}
             className="mt-5 max-w-xl text-base leading-relaxed text-ivory/80 sm:text-lg"
           >
-            Garba nights, Diwali melas, and wedding-season vendors across Seattle and the Eastside — plus a festive closet
-            to borrow the outfit.
+            Eid festivals, garba nights, Vaisakhi, Diwali, and the vendors who make them happen — across Seattle and the
+            Eastside. Plus a festive closet to borrow the outfit.
           </motion.p>
 
           <motion.form

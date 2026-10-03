@@ -5,10 +5,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const voices = [
   {
     quote:
-      "We used to promote Navratri through six WhatsApp groups and a flyer at the temple. Utsav sold out our Meydenbauer night two weeks early.",
-    name: "Hetal Shah",
-    role: "Organizer, Eastside Garba Collective",
-    initials: "HS",
+      "We used to promote our Eid festival through a dozen WhatsApp groups and a flyer at the masjid. This year Milan sold out the family passes two weeks early.",
+    name: "Farhan Siddiqui",
+    role: "Puget Sound Eid Committee",
+    initials: "FS",
   },
   {
     quote:
@@ -19,7 +19,7 @@ const voices = [
   },
   {
     quote:
-      "Half my bookings now come through Utsav. Families find me, see real reviews, and book a date without twenty back-and-forth texts.",
+      "Half my bookings now come through Milan. Families find me, read real reviews, and book a date without twenty back-and-forth texts.",
     name: "Noor Qureshi",
     role: "Henna by Noor, Kirkland",
     initials: "NQ",
@@ -34,7 +34,7 @@ export function CommunityVoices() {
           eyebrow="From the community"
           title={
             <>
-              Made for the aunties, the organizers, <em>and everyone in between</em>
+              What organizers, vendors, and families <em>are saying</em>
             </>
           }
         />

@@ -19,7 +19,7 @@ export type MapPin = {
 function pinIcon(label: string, active: boolean) {
   return L.divIcon({
     className: "",
-    html: `<div class="utsav-pin${active ? " is-active" : ""}"><span>${label}</span></div>`,
+    html: `<div class="milan-pin${active ? " is-active" : ""}"><span>${label}</span></div>`,
     iconSize: [0, 0],
     iconAnchor: [0, 0],
     popupAnchor: [0, -40],

@@ -20,8 +20,8 @@ const workSans = Work_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Utsav — South Asian events, vendors & festive wear in Seattle",
-    template: "%s · Utsav",
+    default: "Milan — South Asian events, vendors & festive wear in Seattle",
+    template: "%s · Milan",
   },
   description:
     "Discover garba nights, Diwali melas, and wedding vendors across Seattle, Bellevue, Redmond, Sammamish, and Kirkland — and rent the outfit to match.",

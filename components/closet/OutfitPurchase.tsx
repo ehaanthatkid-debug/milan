@@ -8,6 +8,7 @@ import { RENTAL_DAYS, type Outfit } from "@/data/closet";
 import { Calendar, addDays } from "@/components/ui/Calendar";
 import { SegmentedControl } from "@/components/ui/Filters";
 import { DELIVERY_FEE, checkoutHref } from "@/lib/checkout";
+import { blockedDates, useOrders } from "@/lib/orders";
 import { useToday } from "@/lib/use-today";
 import { cn, formatPrice, formatShortDate } from "@/lib/utils";
 
@@ -16,6 +17,8 @@ type Delivery = "pickup" | "delivery";
 
 export function OutfitPurchase({ outfit, serverToday }: { outfit: Outfit; serverToday: string }) {
   const today = useToday(serverToday);
+  const orders = useOrders();
+  const booked = [...outfit.bookedDates, ...blockedDates(orders, "rent", outfit.slug)];
   const [mode, setMode] = useState<Mode>(outfit.rentPrice ? "rent" : "buy");
   const [start, setStart] = useState<string | null>(null);
   const [delivery, setDelivery] = useState<Delivery>("pickup");
@@ -74,7 +77,7 @@ export function OutfitPurchase({ outfit, serverToday }: { outfit: Outfit; server
             </p>
             <p className="text-xs text-ink-mute">Tap your pickup day</p>
           </div>
-          <Calendar today={today} booked={outfit.bookedDates} selected={start} onSelect={setStart} rangeDays={RENTAL_DAYS} />
+          <Calendar today={today} booked={booked} selected={start} onSelect={setStart} rangeDays={RENTAL_DAYS} />
           <AnimatePresence>
             {start && (
               <motion.div

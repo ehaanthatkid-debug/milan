@@ -136,13 +136,13 @@ body::before {
   z-index: 0;
 }
 
-.utsav-pin {
+.milan-pin {
   position: absolute;
   transform: translate(-50%, calc(-100% - 6px));
   transition: transform 0.25s var(--ease-soft);
 }
 
-.utsav-pin span {
+.milan-pin span {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -157,7 +157,7 @@ body::before {
   transition: background 0.2s, color 0.2s;
 }
 
-.utsav-pin span::after {
+.milan-pin span::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -168,11 +168,11 @@ body::before {
   transform: translateX(-50%) rotate(45deg);
 }
 
-.utsav-pin.is-active {
+.milan-pin.is-active {
   transform: translate(-50%, calc(-100% - 6px)) scale(1.15);
 }
 
-.utsav-pin.is-active span {
+.milan-pin.is-active span {
   background: var(--color-saffron);
   color: var(--color-maroon-ink);
 }

@@ -476,6 +476,43 @@ export const vendors: Vendor[] = [
     serviceArea: "Seattle & Eastside",
     verified: true,
   },
+  {
+    slug: "zaiqa-halal-kitchen",
+    name: "Zaiqa Halal Kitchen",
+    category: "Caterers",
+    city: "Bellevue",
+    tagline: "Halal-certified Pakistani and Hyderabadi catering for weddings, dawats, and Eid.",
+    priceRange: "$$",
+    startingPrice: 24,
+    priceUnit: "guest",
+    rating: 4.9,
+    reviewCount: 203,
+    image: photos.iftarSpread,
+    gallery: [photos.biryaniPlatter, photos.biryaniBowl, photos.teaPour],
+    bio: [
+      "Zaiqa started as a family kitchen cooking for Eid dawats and grew into one of the Eastside's busiest halal caterers. Every ingredient is sourced from certified halal suppliers, and the kitchen is alcohol-free.",
+      "Known for dum biryani cooked in copper degs on site, nihari that simmers overnight, and a live chaat counter. Iftar boxes are available throughout Ramadan.",
+    ],
+    services: [
+      { name: "Wedding or walima buffet", price: 38, unit: "per guest", description: "Two appetizers, three mains, biryani, naan, raita, and dessert with service staff." },
+      { name: "Dawat menu", price: 24, unit: "per guest", description: "Home-style menu for 30 to 150 guests, delivered and set up." },
+      { name: "Live dum biryani", price: 950, unit: "per deg", description: "Cooked and opened in front of your guests — serves about 60." },
+      { name: "Ramadan iftar boxes", price: 18, unit: "per box", description: "Dates, pakoras, fruit chaat, a main, and a drink. Minimum 20." },
+    ],
+    reviews: [
+      { name: "Fatima S.", rating: 5, date: "2026-08-30", occasion: "Walima, Bellevue", text: "The biryani deg opening was a moment — 300 guests cheering for rice. Every plate came back empty." },
+      { name: "Imran & Sadia", rating: 5, date: "2026-06-21", occasion: "Nikkah dinner, Redmond", text: "Truly halal, beautifully presented, and the staff were so respectful with our elders." },
+      { name: "Aisha K.", rating: 5, date: "2026-03-28", occasion: "Ramadan iftar, Sammamish", text: "We ordered 80 iftar boxes for our masjid community and they arrived hot, on time, and right at maghrib." },
+      { name: "Jason L.", rating: 4, date: "2026-02-14", occasion: "Office lunch, Bellevue", text: "Fantastic nihari. Spice level ran hot for some of my team, so ask for a mild version." },
+    ],
+    bookedDates: ["2026-10-10", "2026-10-17", "2026-11-07", "2026-11-21"],
+    responseTime: "Usually replies within 2 hours",
+    yearsActive: 9,
+    languages: ["English", "Urdu", "Hindi", "Telugu"],
+    serviceArea: "Seattle & Eastside",
+    verified: true,
+    featured: true,
+  },
 ];
 
 export function getVendor(slug: string) {

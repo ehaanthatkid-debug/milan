@@ -1,7 +1,7 @@
 import { photos } from "./images";
 import type { City } from "./shared";
 
-export const GARMENT_TYPES = ["Lehenga", "Saree", "Sherwani", "Kurta", "Anarkali", "Chaniya choli", "Kids"] as const;
+export const GARMENT_TYPES = ["Lehenga", "Saree", "Sharara", "Sherwani", "Kurta", "Anarkali", "Chaniya choli", "Kids"] as const;
 export type GarmentType = (typeof GARMENT_TYPES)[number];
 
 /** Rentals are priced per 4-day window: pick up the day before, return two days after. */
@@ -120,6 +120,15 @@ const owners = {
     rating: 4.9,
     reviewCount: 31,
     responseTime: "Replies within 3 hours",
+    verified: true,
+  },
+  noorELibaas: {
+    name: "Noor-e-Libaas",
+    kind: "Boutique",
+    initials: "NL",
+    rating: 4.9,
+    reviewCount: 97,
+    responseTime: "Replies within 2 hours",
     verified: true,
   },
 } satisfies Record<string, ClosetOwner>;
@@ -442,6 +451,57 @@ export const closet: Outfit[] = [
       "A twirl-ready ruby lehenga for young garba stars, with a matching pair of painted dandiya sticks so they're ready from the first beat.",
     includes: ["Lehenga skirt", "Choli", "Dupatta", "Painted dandiya sticks"],
     bookedDates: ["2026-10-10", "2026-10-11", "2026-10-12", "2026-10-13"],
+  },
+  {
+    slug: "rani-pink-gharara-set",
+    name: "Rani Pink Gota Gharara Set",
+    type: "Sharara",
+    rentPrice: 65,
+    buyPrice: 290,
+    retailPrice: 640,
+    deposit: 90,
+    size: "M",
+    fit: "Bust 36\" · Kurti length 34\" · Gharara waist 28\"–32\" (drawstring)",
+    color: "Rani pink & gold",
+    fabric: "Raw silk kurti with gota-trim gharara and organza dupatta",
+    designer: "Noor-e-Libaas",
+    condition: "Like new",
+    conditionNote: "Worn once for Eid. Freshly pressed.",
+    city: "Bellevue",
+    owner: owners.noorELibaas,
+    images: [
+      photos.shararaPink,
+      detail(photos.shararaPink, 0.5, 0.75, 2.2),
+      detail(photos.shararaPink, 0.5, 0.32, 2.4),
+    ],
+    description:
+      "A classic Eid look: a short raw-silk kurti over a flared gharara gathered at the knee, finished with gota trim and a sheer organza dupatta. Easy to move in from morning prayers to evening dawats.",
+    includes: ["Kurti", "Gharara", "Organza dupatta"],
+    bookedDates: ["2027-03-09", "2027-03-10", "2027-03-11", "2027-03-12"],
+    featured: true,
+  },
+  {
+    slug: "pistachio-walima-sharara",
+    name: "Pistachio Peplum Walima Sharara",
+    type: "Sharara",
+    rentPrice: 140,
+    buyPrice: 980,
+    retailPrice: 2400,
+    deposit: 250,
+    size: "S",
+    fit: "Bust 34\" · Peplum length 30\" · Sharara waist 27\"",
+    color: "Pistachio & antique silver",
+    fabric: "Net peplum with tilla and sequin work over a silk sharara",
+    designer: "Noor-e-Libaas",
+    condition: "Excellent",
+    conditionNote: "Worn for a walima reception. Professionally cleaned.",
+    city: "Bellevue",
+    owner: owners.noorELibaas,
+    images: [photos.shararaPistachio, photos.shararaPistachioAlt, detail(photos.shararaPistachio, 0.5, 0.6, 2.2)],
+    description:
+      "Soft pistachio with antique-silver tilla work — the pastel bridal palette that's become a favorite for walimas and nikkahs. The long veil-style dupatta photographs beautifully.",
+    includes: ["Peplum top", "Sharara", "Embroidered dupatta", "Garment bag"],
+    bookedDates: ["2026-11-14", "2026-11-15", "2026-11-16", "2026-11-17"],
   },
 ];
 

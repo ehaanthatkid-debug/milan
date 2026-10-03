@@ -7,16 +7,29 @@ import { useState } from "react";
 import type { EventItem } from "@/data/events";
 import { SERVICE_FEE_RATE } from "@/data/shared";
 import { checkoutHref } from "@/lib/checkout";
+import { ticketsBought, useOrders } from "@/lib/orders";
 import { cn, formatMoney, formatPrice, formatShortDate } from "@/lib/utils";
 
 export function TicketPicker({ event }: { event: EventItem }) {
-  const firstAvailable = Math.max(0, event.tiers.findIndex((t) => !t.soldOut));
-  const [tierIndex, setTierIndex] = useState(firstAvailable);
+  const orders = useOrders();
+  // Limited tiers count down as this visitor buys tickets.
+  const tiers = event.tiers.map((t, i) => {
+    const left = t.remaining === undefined ? undefined : t.remaining - ticketsBought(orders, event.slug, i);
+    return { ...t, remaining: left, soldOut: t.soldOut || (left !== undefined && left <= 0) };
+  });
+  // Skip free add-on tiers for kids or parents when picking the default — they need a paying ticket alongside.
+  const isAddOn = (t: (typeof tiers)[number]) => t.price === 0 && /kid|child|parent|guardian/i.test(t.name);
+  const preferred = tiers.findIndex((t) => !t.soldOut && !isAddOn(t));
+  const firstAvailable = preferred >= 0 ? preferred : Math.max(0, tiers.findIndex((t) => !t.soldOut));
+  const [tierChoice, setTierIndex] = useState(firstAvailable);
+  const tierIndex = tiers[tierChoice]?.soldOut ? firstAvailable : tierChoice;
   const [qty, setQty] = useState(1);
-  const tier = event.tiers[tierIndex];
-  const subtotal = tier.price * qty;
+  const tier = tiers[tierIndex];
+  const maxQty = Math.min(10, tier.remaining ?? 10);
+  const count = Math.min(qty, maxQty);
+  const subtotal = tier.price * count;
   const free = subtotal === 0;
-  const href = checkoutHref({ type: "event", slug: event.slug, tier: tierIndex, qty });
+  const href = checkoutHref({ type: "event", slug: event.slug, tier: tierIndex, qty: count });
   const cta = free ? "Reserve free spot" : "Get tickets";
 
   return (
@@ -28,7 +41,7 @@ export function TicketPicker({ event }: { event: EventItem }) {
         </div>
 
         <div className="mt-4 space-y-2.5" role="radiogroup" aria-label="Ticket type">
-          {event.tiers.map((t, i) => {
+          {tiers.map((t, i) => {
             const selected = i === tierIndex;
             return (
               <button
@@ -85,19 +98,19 @@ export function TicketPicker({ event }: { event: EventItem }) {
 
         <div className="mt-5 flex items-center justify-between">
           <span className="text-sm font-medium text-ink">{free ? "Spots" : "Quantity"}</span>
-          <Stepper value={qty} onChange={setQty} min={1} max={10} />
+          <Stepper value={count} onChange={setQty} min={1} max={maxQty} />
         </div>
 
         <div className="mt-5 border-t border-sand/80 pt-4">
           <div className="flex items-baseline justify-between">
             <span className="text-sm text-ink-soft">
-              {qty} × {tier.price === 0 ? "Free" : formatPrice(tier.price)}
+              {count} × {tier.price === 0 ? "Free" : formatPrice(tier.price)}
             </span>
             <span className="font-display text-2xl text-ink">{free ? "Free" : formatPrice(subtotal)}</span>
           </div>
           {!free && (
             <p className="mt-1 text-right text-xs text-ink-mute">
-              + {formatMoney(subtotal * SERVICE_FEE_RATE)} Utsav fee ({Math.round(SERVICE_FEE_RATE * 100)}%) at checkout
+              + {formatMoney(subtotal * SERVICE_FEE_RATE)} Milan fee ({Math.round(SERVICE_FEE_RATE * 100)}%) at checkout
             </p>
           )}
         </div>
@@ -119,7 +132,7 @@ export function TicketPicker({ event }: { event: EventItem }) {
           <div className="min-w-0">
             <p className="font-display text-xl leading-tight text-ink">{free ? "Free" : formatPrice(subtotal)}</p>
             <a href="#tickets" className="truncate text-xs text-ink-mute underline-offset-2 hover:underline">
-              {qty} × {tier.name} · change
+              {count} × {tier.name} · change
             </a>
           </div>
           <Link
